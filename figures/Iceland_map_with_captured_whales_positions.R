@@ -86,55 +86,49 @@ bat_labels <- data.frame(
 
 bat_xyz <- dplyr::filter(bat_xyz, V3 < 1)
 b <- ggplot(data = world) +
-  #geom_tile(data = bat_xyz, aes(x = V1, y = V2, fill = V3), alpha=0.8) +
-  # add 200m contour
-  geom_contour(data = bat_xyz, 
-               aes(x=V1, y=V2, z=V3),
-               breaks=c(-1000),
-               size=c(0.1),
-               linetype=c(2),
-               colour="black") +
+  geom_tile(data = bat_xyz, aes(x = V1, y = V2, fill = V3), alpha=0.8) +
   #geom_tile(data = bat_xyz, aes(x = V1, y = V2, fill = V3), alpha=0.75) +
   geom_sf(data = world,fill = "grey", color= "black") +
-  #scale_fill_gradient(low = a[100],high = a[1])+ 
+  scale_fill_gradient("Depth (m)", low = a[99],high = a[1])+ 
   #geom_contour(data = bat_xyz, aes(x = V1, y = V2, z = V3),binwidth = 100, color = "grey85", size = 0.1) +
   #geom_contour(data = bat_xyz, aes(x = V1, y = V2, z = V3),breaks = -200, color = "grey85", size = 0.5) +
   coord_sf(xlim = c(-40, -10), ylim = c(60, 70),expand = FALSE) +
   #geom_point(data = points_labels, aes(x = lat, y = lon), color = "red", size = 1) +
   geom_text(data = points_labels, aes(x = lat, y = lon, label = label, fontface=face), vjust = -0.5, color=color) + labs(x = "Longitude", y = "Latitude", fill = "Whale ID") +
-  geom_point(data=points_whales, aes(lon, lat, fill=Whales), shape= 21, color="black", size=2)  + xlab("Longitude") + ylab("Latitude") +
-  theme_article(base_size = 15) + theme(aspect.ratio = 1,
+  geom_point(data=points_whales, aes(lon, lat), shape= 21, size=2, fill= mycolors, color="black")  + xlab("Longitude") + ylab("Latitude") +
+  theme_article(base_size = 15) + theme(#aspect.ratio = 1,
+                                        legend.position = c(0.9,0.1),
                                         legend.background = element_rect(fill=alpha('white', 0.2)),
                                         legend.text=element_text(size=8),
                                         legend.title=element_text(size=8),
                                         legend.key.size = unit(0.1, 'cm'), #change legend key size
                                         legend.key.height = unit(0.2, 'cm'), #change legend key height
                                         legend.key.width = unit(0.3, 'cm'),
-                                        plot.margin = margin(2, 2, 2, 2, "cm")) + scale_fill_manual(values=mycolors) + theme_article(base_size = 15) + geom_text(data=bat_labels, aes(x = lon, y = lat, label = label), size=2.5, col="black")
+                                        plot.margin = margin(2, 2, 2, 2, "cm"))#+ geom_text(data=bat_labels, aes(x = lon, y = lat, label = label), size=2.5, col="black")
 
 b
 
+#ggsave(b, plot= last_plot(), device= "svg")
 #alternativa_2
 
-bat_xyz <- dplyr::filter(bat_xyz, V3 < 1)
 b <- ggplot(data = world) +
-  geom_tile(data = bat_xyz, aes(x = V1, y = V2, fill = V3), alpha=0.75) +
+  #geom_tile(data = bat_xyz, aes(x = V1, y = V2, fill = V3), alpha=0.8) +
+  #geom_tile(data = bat_xyz, aes(x = V1, y = V2, fill = V3), alpha=0.75) +
   geom_sf(data = world,fill = "grey", color= "black") +
-  scale_fill_gradient(low = a[100],high = a[1])+ 
+  scale_fill_gradient("Depth (m)", low = a[99],high = a[1])+ 
   #geom_contour(data = bat_xyz, aes(x = V1, y = V2, z = V3),binwidth = 100, color = "grey85", size = 0.1) +
   #geom_contour(data = bat_xyz, aes(x = V1, y = V2, z = V3),breaks = -200, color = "grey85", size = 0.5) +
   coord_sf(xlim = c(-40, -10), ylim = c(60, 70),expand = FALSE) +
   #geom_point(data = points_labels, aes(x = lat, y = lon), color = "red", size = 1) +
-  geom_text(data = points_labels, aes(x = lat, y = lon, label = label, fontface=face), vjust = -0.5, color=color) +
-  geom_point(data=points_whales, aes(lon, lat, color=Whales), shape= 16, size=2)  + xlab("Longitude") + ylab("Latitude") +
-  theme_article(base_size = 15) + theme(aspect.ratio = 1,
-                                        legend.background = element_rect(fill=alpha('white', 0.2)),
+  geom_text(data = points_labels, aes(x = lat, y = lon, label = label, fontface=face), vjust = -0.5, color=color) + labs(x = "Longitude", y = "Latitude", fill = "Whale ID") +
+  geom_point(data=points_whales, aes(lon, lat, fill=Whales), shape= 21, size=2)  + xlab("Longitude") + ylab("Latitude") +
+  theme_article(base_size = 15) + theme(legend.background = element_rect(fill=alpha('white', 0.2)),
                                         legend.text=element_text(size=8),
                                         legend.title=element_text(size=8),
                                         legend.key.size = unit(0.1, 'cm'), #change legend key size
                                         legend.key.height = unit(0.2, 'cm'), #change legend key height
                                         legend.key.width = unit(0.3, 'cm'),
-                                        plot.margin = margin(2, 2, 2, 2, "cm")) + scale_color_manual(values=mycolors) + theme_article(base_size = 15)
+                                        plot.margin = margin(2, 2, 2, 2, "cm")) + scale_fill_manual("Whale ID", values=mycolors) + theme_article(base_size = 15) #+ geom_text(data=bat_labels, aes(x = lon, y = lat, label = label), size=2.5, col="black")
 
 b
 
@@ -180,3 +174,5 @@ ggplot() +
            ylim = c(35, 44)) +
   labs(x = "Longitude", y = "Latitude", fill = "Depth (m)") +
   theme_minimal()
+
+citation(package = "SIBER")
