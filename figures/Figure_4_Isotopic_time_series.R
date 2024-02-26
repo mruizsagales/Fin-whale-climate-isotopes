@@ -30,7 +30,7 @@ cyl_names <- c(
 
 
 rect <- data.frame(xmin=as.Date("2018-07-01"), xmax=as.Date("2019-06-01"), ymin=-Inf, ymax=Inf)
-ggplot(data=data, aes(x = as.Date(year_rev), y= Isotope, color = Whale)) +
+plot_ts <- ggplot(data=data, aes(x = as.Date(year_rev), y= Isotope, color = Whale)) +
   geom_smooth(method = "loess", se = FALSE, span = 0.3, aes(fill = Whale))  + facet_wrap(vars(Class), ncol=1, scales = "free", labeller= labeller(Class = as_labeller(cyl_names, label_parsed))) +
   xlab("Year") +
   ylab(expression(paste("Isotope ratio (\u2030)"))) +
@@ -46,8 +46,8 @@ ggplot(data=data, aes(x = as.Date(year_rev), y= Isotope, color = Whale)) +
                                                 legend.key.width = unit(0.5, 'cm'),legend.title = element_text(size=10), 
                                                 legend.text = element_text(size=12))
 
-ggsave("/Users/marcruizisagales/Documents/GitHub/Climate-baleen-plate-isotopes/png/Figure_4_Isotopic_time_series.png", isop, 
-       device = png(width = 400, height = 150))
+ggsave("/Users/marcruizisagales/Documents/GitHub/Climate-baleen-plate-isotopes/png/Figure_4_Isotopic_time_series.png", plot_ts, 
+       device = png(width = 1200, height = 450))
 
 
 
