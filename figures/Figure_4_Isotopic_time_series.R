@@ -46,7 +46,8 @@ ggplot(data=data, aes(x = as.Date(year_rev), y= Isotope, color = Whale)) +
                                                 legend.key.width = unit(0.5, 'cm'),legend.title = element_text(size=10), 
                                                 legend.text = element_text(size=12))
 
-ggsave("Figure_4.png", last_plot())
+ggsave("/Users/marcruizisagales/Documents/GitHub/Climate-baleen-plate-isotopes/png/Figure_4_Isotopic_time_series.png", isop, 
+       device = png(width = 400, height = 150))
 
 
 
