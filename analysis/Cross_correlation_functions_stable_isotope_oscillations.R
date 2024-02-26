@@ -16,6 +16,7 @@ library(patchwork)
 library(stats)
 library(corrplot)
 library(viridis)
+library(ggcorrplot)
 
 # 2. Import data
 
@@ -54,6 +55,10 @@ print(correlation_matrix)
 # Plot the correlation matrix
 corrplot(correlation_matrix, method="color", tl.col="black")
 
+corplo_N <- ggcorrplot(correlation_matrix)
+ggsave("/Users/marcruizisagales/Documents/GitHub/Climate-baleen-plate-isotopes/png/Figure_S1_Corrplot_nitrogen.png", corplo_N, 
+       device = png(width = 600, height = 600))
+
 mean(correlation_matrix) # Average correlation between the nitrogen oscillations of different individuals
 
 # 4. Correlation between carbon stable isotope values in baleen from different whales
@@ -85,6 +90,10 @@ print(correlation_matrix)
 
 # Plot the correlation matrix
 corrplot(correlation_matrix, method="color", tl.col="black")
+
+corplo_C <- ggcorrplot(correlation_matrix)
+ggsave("/Users/marcruizisagales/Documents/GitHub/Climate-baleen-plate-isotopes/png/Figure_S2_Corrplot_carbon.png", corplo_C, 
+       device = png(width = 600, height = 600))
 
 mean(correlation_matrix) # Average correlation between the carbon oscillations of different individuals
 
@@ -127,10 +136,14 @@ ccf_whales <- data.frame(whales, ccf) # dataframe of the N vs C correlation for 
 range(ccf_whales$ccf) # range of the correlations
 
 # plot of the N vs C correlation for each individual
-ggplot(ccf_whales, aes(x = whales, y = ccf, fill = ccf)) +
+
+NvC <- ggplot(ccf_whales, aes(x = whales, y = ccf, fill = ccf)) +
   geom_bar(stat = "identity") +
   scale_fill_distiller(palette = "RdBu", direction = 1) +
   scale_y_continuous(limits=c(0,1)) +
   labs(x = "Whales", y="") +
   theme_article(base_size = 15) +
   theme(axis.text.x=element_text(angle=90, hjust=1), legend.position = c(0.9,0.8), aspect.ratio = 3/4) + labs(fill = "CCF")
+
+ggsave("/Users/marcruizisagales/Documents/GitHub/Climate-baleen-plate-isotopes/png/Figure_S3_corr_N_C.png", NvC, 
+       device = png(width = 600, height = 400))
