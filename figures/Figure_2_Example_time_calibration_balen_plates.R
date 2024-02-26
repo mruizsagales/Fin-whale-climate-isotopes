@@ -76,7 +76,9 @@ isop <- isop +
 isop <- isop + geom_vline(xintercept = rev(year_breaks),
                           color = "grey", lty = 2) + theme(aspect.ratio = 3/4)
 
+
 print(isop)
 
 ggsave("/Users/marcruizisagales/Documents/GitHub/Climate-baleen-plate-isotopes/png/Figure_2_Example_time-estimation_baleen_plates.png", isop, 
-       device = png(width = 400, height = 300))
+       device = png(width = 400, height = 300)
+       )
