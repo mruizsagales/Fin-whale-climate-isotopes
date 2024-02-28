@@ -145,20 +145,20 @@ ggplot(data) +
 
 
 # 12.Randomization
-Bp_dC_rand_clim_m_rel <- randwin(repeats = 1000, 
-                                 baseline = lme4::lmer(d13c.cor ~ 1 + poly(Bp_isotopic_data_use$julian_day,2) + (1| Bp_isotopic_data_use$whale_id), data=Bp_isotopic_data_use),  #this is the base model to which the program adds the climate variables
-                                 xvar = list(NAO=data_climate$NAO_index,
-                                             AMO= data_climate$AMO_index,
-                                             AMOC= data_climate$AMOC_index),
-                                 type = "relative", 
-                                 range= c(36,0), 
-                                 stat = c("mean"),
-                                 func = c("lin"),
-                                 cinterval = "month",
-                                 cmissing = "method2", # only applied in two months of AMOC index
-                                 cdate = data_climate$date_use, bdate = Bp_isotopic_data_use$measured_date_formatted)
+#Bp_dC_rand_clim_m_rel <- randwin(repeats = 1000, 
+                                 #baseline = lme4::lmer(d13c.cor ~ 1 + poly(Bp_isotopic_data_use$julian_day,2) + (1| Bp_isotopic_data_use$whale_id), data=Bp_isotopic_data_use),  #this is the base model to which the program adds the climate variables
+                                 #xvar = list(NAO=data_climate$NAO_index,
+                                             #AMO= data_climate$AMO_index,
+                                             #AMOC= data_climate$AMOC_index),
+                                 #type = "relative", 
+                                 #range= c(36,0), 
+                                 #stat = c("mean"),
+                                 #func = c("lin"),
+                                 #cinterval = "month",
+                                 #cmissing = "method2", # only applied in two months of AMOC index
+                                 #cdate = data_climate$date_use, bdate = Bp_isotopic_data_use$measured_date_formatted)
 
-Bp_dC_rand_clim_m_rel
+#Bp_dC_rand_clim_m_rel
 
 
 
