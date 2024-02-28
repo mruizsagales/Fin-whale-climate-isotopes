@@ -98,21 +98,21 @@ summary(Bp_dC_lm) # NAO and AMO indices are significative
 
 # Model selection
 step(Bp_dC_lm)
-m1 <- get_model(step(Bp_dC_lm))
-summary(m1) # AMOC index out
+m2 <- get_model(step(Bp_dC_lm))
+summary(m2) # AMOC index out
 
-plot(allEffects(m1)) # plot lmm
+plot(allEffects(m2)) # plot lmm
 
 # Model validation
-plot_model(m1) # diagnostics
-cv_m1 <- loo_cv(m1, Bp_sc, "whale_id", keep = "used") # cross-validation
-accuracy(m1) # accuracy
-compare_accuracy(m1, cv_m1) # compare accuracy
-confint(m1) # confint
+plot_model(m2) # diagnostics
+cv_m2 <- loo_cv(m2, Bp_sc, "whale_id", keep = "used") # cross-validation
+accuracy(m2) # accuracy
+compare_accuracy(m2, cv_m2) # compare accuracy
+confint(m2) # confint
 
 # plots
 
-effect_plot <- effect("mean_AMO_dC", m1)
+effect_plot <- effect("mean_AMO_dC", m2)
 ggplot(as.data.frame(effect_plot), aes(x = mean_AMO_dC, y = fit)) +
   geom_line(color = "#FC8D59", linewidth=2) +
   geom_ribbon(aes(ymin = lower, ymax = upper), fill = "#FC8D59", alpha = 0.5,color = "black", linetype = "dotted") +
@@ -120,7 +120,7 @@ ggplot(as.data.frame(effect_plot), aes(x = mean_AMO_dC, y = fit)) +
   ylab(expression(paste("Relative ", delta^{15}, "N (\u2030) values (SD)"))) + xlab("Avg AMO index (10-9 months)") +
   theme_classic() #+geom_point(data=Bp_sc, aes(x = Bp_sc$max_NAO_dN, y = dN))
 
-a<-ggpredict(m1,interval = "confidence") #Confidence instead of prediction intervals can be calculated by explicitly setting interval = "confidence", in which case the random effects variances are ignored.
+a<-ggpredict(m2,interval = "confidence") #Confidence instead of prediction intervals can be calculated by explicitly setting interval = "confidence", in which case the random effects variances are ignored.
 #a<-ggpredict(Bp_dN_lm, type = "random")
 plot2 <- plot(a$mean_AMO_dC)+
   geom_line(color = "#FC8D59", linewidth=2) +
@@ -131,6 +131,7 @@ plot2 <- plot(a$mean_AMO_dC)+
 
 plot2 <- plot2 + theme_article(base_size = 20) + theme(aspect.ratio = 1) +
   plot_layout(ncol = 3)
+plot2
 
 ggsave("/Users/marcruizisagales/Documents/GitHub/Climate-baleen-plate-isotopes/png/Figure_7_Predicted_trends_from_lmm_carbon.png", plot2, 
        device = png(width = 1200, height = 450))
