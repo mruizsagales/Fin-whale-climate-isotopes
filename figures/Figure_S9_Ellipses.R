@@ -56,20 +56,6 @@ reshaped_dataframe <- gather(df_group.ML, key = "Key", value = "Value", -RowName
 # Separate the 'Key' column into 'Whale' and 'Year'
 reshaped_dataframe <- separate(reshaped_dataframe, Key, into = c("Whale", "Year"), sep = "\\.", remove = FALSE)
 
-# Convert the dataframe to the desired format
-library(tidyverse)
-
-new_df <- as.data.frame(group.ML)
-names(new_df) <- c(2010:2022)
-# Transpose the dataframe and convert to tidy format
-tidy_df <- t(new_df) %>%
-  as.data.frame() %>%
-  rownames_to_column(var = "Year") %>%
-  gather(key = "Variable", value = "Value", -Year)
-
-# Print the tidy dataframe
-print(tidy_df)
-
 # Communuty metrics ML
 community.ML <- communityMetricsML(siber.fin) 
 print(community.ML)
@@ -129,11 +115,16 @@ ellipse.plot <- second.plot +
                type = "norm",
                geom = "polygon")+ ylim(6,14)
 
-print(ellipse.plot) 
 
-print(ellipse.plot) + theme(legend.position = c(0.6, 0.1),
+
+ellipse.plot.final <- ellipse.plot + theme(legend.position = c(0.6, 0.1),
                             legend.direction = "horizontal", legend.title = element_blank()) + ### Set aspect ratio of the graph n/n = square
   theme(aspect.ratio=2/4) 
+
+print(ellipse.plot.final) 
+
+ggsave("/Users/marcruizisagales/Documents/GitHub/Climate-baleen-plate-isotopes/png/Figure_S9_Ellipses.png", ellipse.plot.final, 
+       device = png(width = 1200, height = 450))
 
 
 # 2. Plot 2
@@ -147,9 +138,9 @@ sbg_2 <- df_2 %>%
                    sdN = sd(dN))
 
 colnames(sbg_2) <- c("Year","count","mC","sdC","mN","sdN")
-tidy_df_SEAc <- filter(tidy_df, Variable == "SEAc")
+df_SEAc <- filter(reshaped_dataframe, RowNames == "SEAc")
 
-Seac <- merge(sbg_2, tidy_df_SEAc, by= "Year")
+Seac <- merge(sbg_2, df_SEAc, by= "Year")
 
 
 
@@ -157,36 +148,31 @@ Seac$Year <- as.double(Seac$Year)
 Seac$Value <- as.numeric(Seac$Value)
 Seac$count <- as.numeric(Seac$count)
 
-Seac_gam <- mgcv::gam(Value ~  s(Year),
+Seac_gam <- mgcv::gam(Value ~  s(Year) + s(count), select=TRUE, method = 'REML',
                         data= Seac)
-
-plot(Value ~ Year, Seac)
 
 summary(Seac_gam)
 
 par(mar=c(5,5,5,5))
 plot.gam(Seac_gam)
 
-model_2_p <- predict_gam(SDn_mN_gam)
+model_2_p <- predict_gam(Seac_gam)
 model_2_p
 
-model_2_p %>%
-  ggplot(aes(mN, count, z = fit)) +
-  geom_raster(aes(fill = fit)) +
-  geom_contour(colour = "white") +
-  scale_fill_continuous(name = "y") +
-  theme_minimal() +
-  theme(legend.position = "top")
 
-predict_gam(SDn_mN_gam, exclude_terms = "s(count)") %>%
-  ggplot(aes(mN, fit)) + geom_smooth_ci() + geom_line(color = "darkgrey", linewidth=2) +
+SEAc_time <- predict_gam(Seac_gam, exclude_terms = "s(count)") %>%
+  ggplot(aes(Year, fit)) + geom_smooth_ci() + geom_line(color = "darkgrey", linewidth=2) +
   geom_ribbon(aes(ymin = fit-1.96 *se.fit, ymax = fit+1.96 *se.fit), alpha = 0,color = "black", linetype = "dotted") + 
-  ylab(expression(paste("Annual ",delta^{15}, "N (\u2030) SD"))) +
-  xlab(expression(paste("Annual ",delta^{15}, "N (\u2030) mean"))) + theme_article(base_size = 20)
+  geom_point(data = Seac, aes(Year, Value)) +
+  ylab(expression(paste("SEAc (\u2030"^2, ")" ))) +
+  xlab("Estimated date (years)") + theme_article(base_size = 15) + theme(aspect.ratio = 1) + scale_x_continuous(breaks= c(2010, 2012, 2014,2016,2018,2020,2022))
+
+ggsave("/Users/marcruizisagales/Documents/GitHub/Climate-baleen-plate-isotopes/png/Figure_S9_SEAc_time.png", SEAc_time, 
+       device = png(width = 1200, height = 450))
 
 # 3. Plot 3
 
-sbg_2$Year_from_sample_date <- as.numeric(sbg_2$Year_from_sample_date)
+sbg_2$Year <- as.numeric(sbg_2$Year)
 sbg_2$sdN <- as.numeric(sbg_2$sdN)
 sbg_2$mN <- as.numeric(sbg_2$mN)
 
@@ -200,19 +186,14 @@ plot.gam(SDn_mN_gam)
 model_2_p <- predict_gam(SDn_mN_gam)
 model_2_p
 
-model_2_p %>%
-  ggplot(aes(mN, count, z = fit)) +
-  geom_raster(aes(fill = fit)) +
-  geom_contour(colour = "white") +
-  scale_fill_continuous(name = "y") +
-  theme_minimal() +
-  theme(legend.position = "top")
 
-predict_gam(SDn_mN_gam, exclude_terms = "s(count)") %>%
+Nmean_vs_NSD <- predict_gam(SDn_mN_gam, exclude_terms = "s(count)") %>%
   ggplot(aes(mN, fit)) + geom_smooth_ci() + geom_line(color = "darkgrey", linewidth=2) +
   geom_ribbon(aes(ymin = fit-1.96 *se.fit, ymax = fit+1.96 *se.fit), alpha = 0,color = "black", linetype = "dotted") + 
   ylab(expression(paste("Annual ",delta^{15}, "N (\u2030) SD"))) +
-  xlab(expression(paste("Annual ",delta^{15}, "N (\u2030) mean"))) + theme_article(base_size = 20)
+  xlab(expression(paste("Annual ",delta^{15}, "N (\u2030) mean"))) + theme_article(base_size = 20) + theme_article(base_size = 15) + theme(aspect.ratio = 1)
 
-#####
+ggsave("/Users/marcruizisagales/Documents/GitHub/Climate-baleen-plate-isotopes/png/Figure_S9_Nmean_vs_NSD.png", Nmean_vs_NSD, 
+       device = png(width = 1200, height = 450))
+
 
