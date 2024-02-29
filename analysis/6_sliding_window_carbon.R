@@ -167,7 +167,7 @@ ggplot(data) +
 
 # Mean NAO
 pvalue(dataset = Bp_dC_clim_m_rel[[1]]$Dataset, datasetrand = Bp_dC_rand_clim_m_rel[[1]], 
-       metric="AIC", sample.size=12) # "<0.001"
+       metric="AIC", sample.size=12) # "0.009"
 
 # Mean AMO
 pvalue(dataset = Bp_dC_clim_m_rel[[2]]$Dataset, datasetrand = Bp_dC_rand_clim_m_rel[[2]], 
@@ -175,7 +175,7 @@ pvalue(dataset = Bp_dC_clim_m_rel[[2]]$Dataset, datasetrand = Bp_dC_rand_clim_m_
 
 # Mean AMOC
 pvalue(dataset = Bp_dC_clim_m_rel[[3]]$Dataset, datasetrand = Bp_dC_rand_clim_m_rel[[3]], 
-       metric="AIC", sample.size=12) # "<0.001"
+       metric="AIC", sample.size=12) # "0.055"
 
 
 # 14. Extract weather variables from time periods identified by sliding window
