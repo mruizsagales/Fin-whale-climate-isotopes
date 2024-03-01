@@ -144,7 +144,7 @@ data$Index <- factor(data$Index, levels=rev(c("NAO","AMO","AMOC")))
 
 ggplot(data) +
   geom_vline(aes(xintercept = data$Index), color = "gray", linetype = "dotted") +
-  geom_linerange(aes(x = data$Index, ymin = WindowOpen, ymax = WindowClose), color = '#B3CDE3', size = 20, alpha = 0.5) +  # Afegeix les línies de separació
+  geom_linerange(aes(x = data$Index, ymin = WindowOpen, ymax = WindowClose), color = '#B3CDE3', linewidth = 20, alpha = 0.5) +  # Afegeix les línies de separació
   geom_hline(yintercept = seq(1,36,1), lty = 1, lwd = 0.1, colour = "white") +
   geom_hline(yintercept = 0, lty = 1, lwd = 1, colour = "yellow") +
   coord_flip() +
