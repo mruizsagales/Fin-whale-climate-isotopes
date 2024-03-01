@@ -22,7 +22,7 @@ library(patchwork)
 
 # 2. Import data
 
-df <- read_excel("~/Desktop/Doctorat/Analisis_isotops_barbes/0_point_alignments_29_juny_total_-4.xlsx") # Import dataset of the one-centimetre-spaced stable isotope data along the baleen plate of fin whales
+df <- read_excel("/Users/marcruizisagales/Documents/GitHub/Climate-baleen-plate-isotopes/data/0_point_alignments_29_juny_total_-4.xlsx") # Import dataset of the one-centimetre-spaced stable isotope data along the baleen plate of fin whales
 
 min_cm_minus_4 <- df %>% dplyr::group_by(Whale) %>% dplyr::summarise(min_cm = min(Cm)) # Make sure that all the stable isotope data start at the position -4 cm 
 
@@ -86,7 +86,7 @@ for (i in 1:length(unique(df_2013$Whale))) {
   # plot x and y axis
   isop <- isop + 
     scale_y_continuous(sec.axis = sec_axis(~.+v_shift, 
-                                           name = expression(paste(delta^{15}, "N (\u2030)"))),limits = c(-30, -10)) + labs(title= unique(whale_isos_2013$Whale)[i])
+                                           name = expression(paste(delta^{15}, "N (\u2030)"))),limits = c(-30, -10)) + labs(title= unique(df_2013$Whale)[i])
   new_df <- df_i
   combined_df_2013 <- rbind(combined_df_2013, new_df)
   print(isop)
@@ -205,7 +205,7 @@ for (i in 1:length(unique(df_2015$Whale))) {
   # plot x and y axis
   isop <- isop + 
     scale_y_continuous(sec.axis = sec_axis(~.+v_shift, 
-                                           name = expression(paste(delta^{15}, "N (\u2030)"))),limits = c(-30, -10)) + labs(title= unique(whale_isos_2015$Whale)[i])
+                                           name = expression(paste(delta^{15}, "N (\u2030)"))),limits = c(-30, -10)) + labs(title= unique(df_2015$Whale)[i])
   new_df <- df_i
   combined_df_2015 <- rbind(combined_df_2015, new_df)
   print(isop)
@@ -332,7 +332,7 @@ for (i in 1:length(unique(df_2018$Whale))) {
   # plot x and y axis
   isop <- isop + 
     scale_y_continuous(sec.axis = sec_axis(~.+v_shift, 
-                                           name = expression(paste(delta^{15}, "N (\u2030)"))),limits = c(-30, -10)) + labs(title= unique(whale_isos_2018$Whale)[i])
+                                           name = expression(paste(delta^{15}, "N (\u2030)"))),limits = c(-30, -10)) + labs(title= unique(df_2018$Whale)[i])
   new_df <- df_i
   combined_df_2018 <- rbind(combined_df_2018, new_df)
   print(isop)
@@ -476,7 +476,7 @@ for (i in 1:length(unique(df_2022$Whale))) {
   # plot x and y axis
   isop <- isop + 
     scale_y_continuous(sec.axis = sec_axis(~.+v_shift, 
-                                           name = expression(paste(delta^{15}, "N (\u2030)"))),limits = c(-30, -10)) + labs(title= unique(whale_isos_2022$Whale)[i])
+                                           name = expression(paste(delta^{15}, "N (\u2030)"))),limits = c(-30, -10)) + labs(title= unique(df_2022$Whale)[i])
   new_df <- df_i
   combined_df_2022 <- rbind(combined_df_2022, new_df)
   print(isop)
@@ -510,7 +510,7 @@ plot_dC_2022 <- ggplot() + geom_line(data= combined_df_2022[combined_df_2022$Wha
   xlab("Year") + theme(aspect.ratio = 3/4) +
   ylab(expression(paste(delta^{13}, "C (\u2030)")))
 
-plot_dN_2022+plot_dC_2022
+plot_dN_2022/plot_dC_2022
 
 # Average values for 2022 individuals
 
@@ -535,7 +535,7 @@ ggsave("/Users/marcruizisagales/Documents/GitHub/Climate-baleen-plate-isotopes/p
 merge <- rbind(combined_df_2013,combined_df_2015,combined_df_2018, combined_df_2022)
 
 library(openxlsx) #Save
-write.xlsx(merge, file = "All_merged_time_calibrated_2013_to_2022_non_Suess_cor.xlsx")
+write.xlsx(merge, file = "/Users/marcruizisagales/Documents/GitHub/Climate-baleen-plate-isotopes/data/All_merged_time_calibrated_2013_to_2022_non_Suess_cor.xlsx")
 
 
 

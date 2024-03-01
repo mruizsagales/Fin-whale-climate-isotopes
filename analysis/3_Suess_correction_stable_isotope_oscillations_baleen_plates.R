@@ -17,7 +17,7 @@ library(dplyr)
 library(SuessR)
 
 # 2. Import data
-merge <- read_excel("All_merged_time_calibrated_2013_to_2022_non_Suess_cor.xlsx")
+merge <- read_excel("/Users/marcruizisagales/Documents/GitHub/Climate-baleen-plate-isotopes/data/All_merged_time_calibrated_2013_to_2022_non_Suess_cor.xlsx")
 
 merge <-merge[complete.cases(merge$dC), ] # remove the rows with no d13C values in order to be able to correct for the Suess effect
 
@@ -55,4 +55,4 @@ df2 <- SuessR(data=subset, correct.to = 2022) # correct the Suess and Laws effec
 fw.data_d13cor <- merge(df1,df2,by="id") # merge df1 and df2
 
 library(openxlsx) # Save
-write.xlsx(fw.data_d13cor, file = "All_merged_time_calibrated_2013_to_2022_Suess_cor.xlsx")
+write.xlsx(fw.data_d13cor, file = "/Users/marcruizisagales/Documents/GitHub/Climate-baleen-plate-isotopes/data/All_merged_time_calibrated_2013_to_2022_Suess_cor.xlsx")

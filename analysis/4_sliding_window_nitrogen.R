@@ -25,19 +25,19 @@ library(climwin)
 library(readr)
 
 # 2. Import stable isotope data
-df <- read_excel("~/Desktop/Doctorat/Analisis_isotops_barbes/Projecte_barbes_clima/Environmental_vars/All_merged_time_calibrated_2013_to_2022_Suess_cor.xlsx") # Import Suess-corrected dataset of stable isotope data along the baleen plate of fin whales 
+df <- read_excel("/Users/marcruizisagales/Documents/GitHub/Climate-baleen-plate-isotopes/data/All_merged_time_calibrated_2013_to_2022_Suess_cor.xlsx") # Import Suess-corrected dataset of stable isotope data along the baleen plate of fin whales 
 
-unique(df$Whale) # check the 29 individuals
+length(unique(df$Whale)) # check the 29 individuals
 min(df$year_rev) # first date: "2010-07-11 UTC"
 max(df$year_rev) # last date: "2022-07-30 UTC"
 
-# 3. Load monthly weather data
-data_climate <- read_excel("~/Desktop/Paper_climate/Datasets_paper_clim/merged_climate_cycles_dated_ts.xlsx")
+# 3. Load monthly climate data
+data_climate <- read_excel("~/Desktop/Paper_climate/Datasets_paper_clim/merged_climate_cycles_dated_ts.xlsx") #load climate data
 data_climate<- as.data.frame(data_climate)
 data_climate$Date <- as.Date(data_climate$date)
 data_climate$date_use <- format(data_climate$Date, format= "%d/%m/%Y")
 
-data_env <- read_excel("~/Desktop/Paper_climate/Datasets_paper_clim/Env_total_13_nov.xlsx")
+data_env <- read_excel("~/Desktop/Paper_climate/Datasets_paper_clim/Env_total_13_nov.xlsx") # load environmental data
 data_env<- as.data.frame(data_env)
 data_env$Date <- as.Date(data_env$Date)
 
@@ -51,6 +51,15 @@ df$measured_date_formatted <- format(df$measured, format= "%d/%m/%Y")
 Bp_isotopic_data_use <-df[complete.cases(df$dN), ]
 Bp_isotopic_data_use <- Bp_isotopic_data_use[complete.cases(Bp_isotopic_data_use$d13c.cor), ]
 nrow(Bp_isotopic_data_use)
+
+range(Bp_isotopic_data_use$dN)
+range(Bp_isotopic_data_use$d13c.cor)
+
+mean(Bp_isotopic_data_use$dN)
+mean(Bp_isotopic_data_use$d13c.cor)
+
+sd(Bp_isotopic_data_use$dN)
+sd(Bp_isotopic_data_use$d13c.cor)
 
 # 6. Convert year and whale ID to factor
 Bp_isotopic_data_use$month_f <- factor(Bp_isotopic_data_use$Month_from_sample_date)
