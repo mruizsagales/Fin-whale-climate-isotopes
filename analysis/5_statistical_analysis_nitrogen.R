@@ -127,7 +127,7 @@ ggplot(as.data.frame(effect_plot), aes(x = mean_NAO_dN, y = fit)) +
   geom_line(color = "#74A9CF", linewidth=2) +
   geom_ribbon(aes(ymin = lower, ymax = upper), fill = "#74A9CF", alpha = 0.5,color = "black", linetype = "dotted") +
   geom_line(aes(ymin = lower, ymax = upper)) +
-  ylab(expression(paste("Relative ", delta^{15}, "N (\u2030) values (SD)"))) + xlab("Avg NAO index (34-31 months)") +
+  ylab(expression(paste("Relative ", delta^{15}, "N (\u2030) values (SD)"))) + xlab("Mean NAO index (34-31 months)") +
   theme_classic() 
 
 a<-ggpredict(m1,interval = "confidence") #Confidence instead of prediction intervals can be calculated by explicitly setting interval = "confidence", in which case the random effects variances are ignored.
@@ -136,7 +136,7 @@ plot1 <- plot(a$mean_NAO_dN)+
   geom_line(color = "#74A9CF", linewidth=2) +
   geom_ribbon(aes(ymin = conf.low, ymax = conf.high), fill = "#74A9CF", alpha = 0.5,color = "black", linetype = "dotted") +
   geom_line(aes(ymin = conf.low, ymax = conf.high)) +
-  ylab(expression(paste("Relative ", delta^{15}, "N values (SD)"))) + xlab(expression(atop("Avg NAO index", atop(italic("(34-31 months)"), "")))) +
+  ylab(expression(paste("Relative ", delta^{15}, "N values (SD)"))) + xlab(expression(atop("Mean NAO index", atop(italic("(34-31 months)"), "")))) +
   theme(aspect.ratio=2/4) + ggtitle("") #+geom_point(data=Bp_sc, aes(x = Bp_sc$max_AO_dN, y = dN))
 
 plot1 <- plot1 + theme_article(base_size = 20)
@@ -147,7 +147,7 @@ ggplot(as.data.frame(effect_plot), aes(x = mean_AMO_dN, y = fit)) +
   geom_line(color = "#74A9CF", linewidth=2) +
   geom_ribbon(aes(ymin = lower, ymax = upper), fill = "#74A9CF", alpha = 0.5,color = "black", linetype = "dotted") +
   geom_line(aes(ymin = lower, ymax = upper)) +
-  ylab(expression(paste("Relative ", delta^{15}, "N values (SD)"))) + xlab("Avg AO index (31-28 months)") +
+  ylab(expression(paste("Relative ", delta^{15}, "N values (SD)"))) + xlab("Mean AO index (31-28 months)") +
   theme_classic() #+geom_point(data=Bp_sc, aes(x = Bp_sc$max_AO_dN, y = dN))
 
 a<-ggpredict(m1,interval = "confidence") #Confidence instead of prediction intervals can be calculated by explicitly setting interval = "confidence", in which case the random effects variances are ignored.
@@ -156,16 +156,19 @@ plot2 <- plot(a$mean_AMO_dN)+
   geom_line(color = "#74A9CF", linewidth=2) +
   geom_ribbon(aes(ymin = conf.low, ymax = conf.high), fill = "#74A9CF", alpha = 0.5,color = "black", linetype = "dotted") +
   geom_line(aes(ymin = conf.low, ymax = conf.high)) +
-  ylab(expression(paste("Relative ", delta^{15}, "N values (SD)"))) + xlab(expression(atop("Avg AMO index", atop(italic("(32-27 months)"), "")))) +
+  ylab(expression(paste("Relative ", delta^{15}, "N values (SD)"))) + xlab(expression(atop("Mean AMO index", atop(italic("(32-27 months)"), "")))) +
   theme(aspect.ratio=2/4) + ggtitle("") #+geom_point(data=Bp_sc, aes(x = Bp_sc$max_AO_dN, y = dN))
 
 plot2 <- plot2 + theme_article(base_size = 20)
 plot2
 
-plot_final <- plot1 + theme(aspect.ratio = 1) +plot2 + theme(aspect.ratio = 1) + 
-  plot_layout(ncol = 3) 
+plot_final <- plot1 + theme(aspect.ratio = 1) +plot2 + theme(aspect.ratio = 1) +plot3 + theme(aspect.ratio = 1) + 
+  plot_layout(ncol = 3) +
+  plot_annotation(tag_levels = "a", 
+                  tag_suffix = ")")
+
 
 plot_final
 
-ggsave("/Users/marcruizisagales/Documents/GitHub/Climate-baleen-plate-isotopes/png/Figure_6_Predicted_trends_from_lmm_nitrogen.png", plot_final, 
+ggsave("/Users/marcruizisagales/Documents/GitHub/Climate-baleen-plate-isotopes/png/Figure_6_Predicted_trends_from_lmm_final.png", plot_final, 
        device = png(width = 1200, height = 450))
