@@ -101,14 +101,21 @@ step(Bp_dC_lm)
 m2 <- get_model(step(Bp_dC_lm))
 summary(m2) # AMOC index out
 
-plot(allEffects(m2)) # plot lmm
-
 # Model validation
 plot_model(m2) # diagnostics
 cv_m2 <- loo_cv(m2, Bp_sc, "whale_id", keep = "used") # cross-validation
 accuracy(m2) # accuracy
 compare_accuracy(m2, cv_m2) # compare accuracy
 confint(m2) # confint
+
+# Model validation with boostraping
+qqPlot(resid(m2)) # normality of the residuals
+qqPlot(c(ranef(m2)$whale_id$`(Intercept)`)) # normality of the random effects
+plot(m2) # variance homogeneity
+
+f = function(m) {res= fixef(m)[4]; names(res) = names(fixef(m)[4]); res}
+boost <- lme4::bootMer(m2, f, nsim=200, type="semiparametric", use.u=TRUE)
+plot(boost, index= 1)
 
 # plots
 
