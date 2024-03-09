@@ -124,21 +124,20 @@ ggplot(as.data.frame(effect_plot), aes(x = mean_AMO_dC, y = fit)) +
   geom_line(color = "#FC8D59", linewidth=2) +
   geom_ribbon(aes(ymin = lower, ymax = upper), fill = "#FC8D59", alpha = 0.5,color = "black", linetype = "dotted") +
   geom_line(aes(ymin = lower, ymax = upper)) +
-  ylab(expression(paste("Relative ", delta^{15}, "N (\u2030) values (SD)"))) + xlab("Avg AMO index (10-9 months)") +
+  ylab(expression(paste("Relative ", delta^{15}, "N (\u2030) values (SD)"))) + xlab("Mean AMO index (10-9 months)") +
   theme_classic() #+geom_point(data=Bp_sc, aes(x = Bp_sc$max_NAO_dN, y = dN))
 
 a<-ggpredict(m2,interval = "confidence") #Confidence instead of prediction intervals can be calculated by explicitly setting interval = "confidence", in which case the random effects variances are ignored.
 #a<-ggpredict(Bp_dN_lm, type = "random")
-plot2 <- plot(a$mean_AMO_dC)+
+plot3 <- plot(a$mean_AMO_dC)+
   geom_line(color = "#FC8D59", linewidth=2) +
   geom_ribbon(aes(ymin = conf.low, ymax = conf.high), fill = "#FC8D59", alpha = 0.5,color = "black", linetype = "dotted") +
   geom_line(aes(ymin = conf.low, ymax = conf.high)) +
-  ylab(expression(paste("Relative ", delta^{13}, "C values (SD)"))) + xlab(expression(atop("Avg AMO index", atop(italic("(10-9 months)"), "")))) +
+  ylab(expression(paste("Relative ", delta^{13}, "C values (SD)"))) + xlab(expression(atop("Mean AMO index", atop(italic("(10-9 months)"), "")))) +
   theme(aspect.ratio=2/4) + ggtitle("") #+geom_point(data=Bp_sc, aes(x = Bp_sc$max_AO_dN, y = dN))
 
-plot2 <- plot2 + theme_article(base_size = 20) + theme(aspect.ratio = 1) +
-  plot_layout(ncol = 3)
-plot2
+plot3 <- plot3 + theme_article(base_size = 20)
+plot3
 
 ggsave("/Users/marcruizisagales/Documents/GitHub/Climate-baleen-plate-isotopes/png/Figure_7_Predicted_trends_from_lmm_carbon.png", plot2, 
        device = png(width = 1200, height = 450))
