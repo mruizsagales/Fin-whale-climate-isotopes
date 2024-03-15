@@ -22,6 +22,9 @@ library(SuessR)
 
 data <- read_excel("~/Desktop/Doctorat/Analisis_isotops_barbes/Clima/Data/Krill_Islandia.xlsx", sheet = "Hoja2")
 
+mean(data$dN, na.rm=TRUE)
+sd(data$dN, na.rm=TRUE)
+
 # 3. Boxplot for nitrogen
 
 krill_N <- ggplot(data, aes(as.factor(any),dN)) + 
@@ -46,7 +49,10 @@ krill_C
 
 #4.2. Boxplot for corrected carbon
 data_cor <- data.frame(id = seq(1, length(data$dC)), year = data$any, region = "Subpolar North Atlantic", d13c = data$dC)
-data_cor_suess <- SuessR(data_cor, correct.to = 2022)
+data_cor_suess <- SuessR(data_cor, correct.to = 2015)
+
+mean(data_cor_suess$d13c.cor, na.rm=TRUE)
+sd(data_cor_suess$d13c.cor, na.rm=TRUE)
 
 krill_C_cor<- ggplot(data_cor_suess, aes(as.factor(year),d13c.cor)) + 
   geom_boxplot(fill="#74A9CF", alpha=0.5, width=0.6) +
