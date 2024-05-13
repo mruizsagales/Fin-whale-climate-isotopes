@@ -25,6 +25,11 @@ data <- read_excel("~/Desktop/Doctorat/Analisis_isotops_barbes/Clima/Data/Krill_
 mean(data$dN, na.rm=TRUE)
 sd(data$dN, na.rm=TRUE)
 range(data$dN, na.rm=TRUE)
+
+mean(data$dC, na.rm=TRUE)
+sd(data$dC, na.rm=TRUE)
+range(data$dC, na.rm=TRUE)
+
 # 3. Boxplot for nitrogen
 
 krill_N <- ggplot(data, aes(as.factor(any),dN)) + 
