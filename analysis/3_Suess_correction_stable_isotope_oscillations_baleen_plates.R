@@ -50,9 +50,31 @@ subset$year <- as.numeric(subset$year) # define year as a numeric variable
 
 subset <- as.data.frame(subset) # define subset as a dataframe
 
-df2 <- SuessR(data=subset, correct.to = 2022) # correct the Suess and Laws effect to the year 2022
+df2 <- SuessR(data=subset, correct.to = 2022) # correct the Suess and Laws effect
+
+range(df2$net.cor)
 
 fw.data_d13cor <- merge(df1,df2,by="id") # merge df1 and df2
+
+fw.data_d13cor_summary_whale <- fw.data_d13cor %>% dplyr::group_by(Whale) %>% dplyr::summarise(dN_mean= mean(dN, na.rm=T),
+                                                 dN_sd= sd(dN, na.rm=T),
+                                                 dN_min= min(dN, na.rm=T),
+                                                 dN_max= max(dN, na.rm=T),
+                                                 dN_max= max(dN, na.rm=T),
+                                                 dN_range= max(dN, na.rm=T)-min(dN, na.rm=T),
+                                                 dC_sd= sd(d13c.cor, na.rm=T),
+                                                 dC_min= min(d13c.cor, na.rm=T),
+                                                 dC_max= max(d13c.cor, na.rm=T),
+                                                 dC_range= max(d13c.cor, na.rm=T)-min(d13c.cor, na.rm=T))
+
+range(fw.data_d13cor$dN, na.rm=T)
+range(fw.data_d13cor$d13c.cor)
+
+mean(fw.data_d13cor_summary_whale$dN_range)
+sd(fw.data_d13cor_summary_whale$dN_range)
+
+mean(fw.data_d13cor_summary_whale$dC_range)
+sd(fw.data_d13cor_summary_whale$dC_range)
 
 library(openxlsx) # Save
 write.xlsx(fw.data_d13cor, file = "/Users/marcruizisagales/Documents/GitHub/Climate-baleen-plate-isotopes/data/All_merged_time_calibrated_2013_to_2022_Suess_cor.xlsx")

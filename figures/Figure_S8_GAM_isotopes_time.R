@@ -28,7 +28,7 @@ df <- read_excel("~/Desktop/Doctorat/Analisis_isotops_barbes/Projecte_barbes_cli
 # nitrogen
 df$Whale <- as.factor(df$Whale)
 df$Year_from_sample_date <- as.numeric(df$Year_from_sample_date)
-d13c.cor_Year_Whale_gam <- mgcv::gam(d13c.cor ~  s(month(df$year_rev)) + s(year(df$year_rev), k=3) + s(Whale, bs = "re"), data= df, select=TRUE, method = 'REML')
+d13c.cor_Year_Whale_gam <- mgcv::gam(d13c.cor ~  s(month(df$year_rev)) + s(year(df$year_rev), k=5) + s(Whale, bs = "re"), data= df, select=TRUE, method = 'REML')
 summary(d13c.cor_Year_Whale_gam)
 
 # plot nitrogen
@@ -44,7 +44,7 @@ dev.off()
 # carbon
 df$Whale <- as.factor(df$Whale)
 df$Year_from_sample_date <- as.numeric(df$Year_from_sample_date)
-dN_Year_Whale_gam <- mgcv::gam(dN ~  s(month(df$year_rev)) + s(year(df$year_rev)) + s(Whale, bs = "re"), data= df, select=TRUE, method = 'REML')
+dN_Year_Whale_gam <- mgcv::gam(dN ~  s(month(df$year_rev)) + s(year(df$year_rev),k=5) + s(Whale, bs = "re"), data= df, select=TRUE, method = 'REML')
 summary(dN_Year_Whale_gam)
 
 # plot carbon
