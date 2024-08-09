@@ -24,7 +24,7 @@ standard_theme <- theme(
   legend.key.size = unit(0.5, 'cm'), 
   legend.key.height = unit(0.5, 'cm'), 
   legend.key.width = unit(0.5, 'cm'),
-  aspect.ratio = 1.5/4
+  aspect.ratio = 2/4
 )
 
 # 2. Import data
