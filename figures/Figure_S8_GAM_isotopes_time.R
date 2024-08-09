@@ -35,11 +35,11 @@ summary(d13c.cor_Year_Whale_gam)
 par(mar=c(5,5,5,5))
 plot.gam(d13c.cor_Year_Whale_gam)
 
-
 dev.new()
-png(filename="/Users/marcruizisagales/Documents/GitHub/Climate-baleen-plate-isotopes/png/Figure_S8_GAM_d13c.cor_time.png", width = 1000, height = 480)
 mgcv::plot.gam(d13c.cor_Year_Whale_gam, xlab="Estimated date (years)", ylab=" s(years, 4.77)", main= expression(paste(delta^13, "C corr.")),pages = 1)
+png(filename="/Users/marcruizisagales/Documents/GitHub/Climate-baleen-plate-isotopes/png/Figure_S8_GAM_d13c.cor_time.png")
 dev.off()
+
 
 # carbon
 df$Whale <- as.factor(df$Whale)
