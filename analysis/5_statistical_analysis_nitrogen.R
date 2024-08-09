@@ -122,13 +122,23 @@ plot(boost, index= 1)
 
 # plots
 
+standard_theme <- theme(
+  #axis.title = element_text(size = 20),   # Axis titles
+  #axis.text = element_text(size = 18),    # Axis text (tick labels)
+  #plot.title = element_text(size = 16),   # Plot title
+  legend.title = element_text(size = 14), # Legend title
+  legend.text = element_text(size = 12),  # Legend text
+  #strip.text = element_text(size = 15),    # Facet labels
+  aspect.ratio = 4/4
+)
+
 effect_plot <- effect("mean_NAO_dN", m1)
 ggplot(as.data.frame(effect_plot), aes(x = mean_NAO_dN, y = fit)) +
   geom_line(color = "#74A9CF", linewidth=2) +
   geom_ribbon(aes(ymin = lower, ymax = upper), fill = "#74A9CF", alpha = 0.5,color = "black", linetype = "dotted") +
   geom_line(aes(ymin = lower, ymax = upper)) +
   ylab(expression(paste("Relative ", delta^{15}, "N (\u2030) values (SD)"))) + xlab("Mean NAO index (34-31 months)") +
-  theme_classic() 
+  theme_classic() +standard_theme
 
 a<-ggpredict(m1,interval = "confidence") #Confidence instead of prediction intervals can be calculated by explicitly setting interval = "confidence", in which case the random effects variances are ignored.
 #a<-ggpredict(Bp_dN_lm, type = "random")
@@ -137,10 +147,9 @@ plot1 <- plot(a$mean_NAO_dN)+
   geom_ribbon(aes(ymin = conf.low, ymax = conf.high), fill = "#74A9CF", alpha = 0.5,color = "black", linetype = "dotted") +
   geom_line(aes(ymin = conf.low, ymax = conf.high)) +
   ylab(expression(paste("Relative ", delta^{15}, "N values (SD)"))) + xlab(expression(atop("Mean NAO index", atop(italic("(34-31 months)"), "")))) +
-  theme(aspect.ratio=2/4) + ggtitle("") #+geom_point(data=Bp_sc, aes(x = Bp_sc$max_AO_dN, y = dN))
+  theme_article(base_size = 15) +standard_theme + ggtitle("") #+geom_point(data=Bp_sc, aes(x = Bp_sc$max_AO_dN, y = dN))
 
-plot1 <- plot1 + theme_article(base_size = 20)
-plot1
+print(plot1)
 
 effect_plot <- effect("mean_AMO_dN", m1)
 ggplot(as.data.frame(effect_plot), aes(x = mean_AMO_dN, y = fit)) +
@@ -148,7 +157,7 @@ ggplot(as.data.frame(effect_plot), aes(x = mean_AMO_dN, y = fit)) +
   geom_ribbon(aes(ymin = lower, ymax = upper), fill = "#74A9CF", alpha = 0.5,color = "black", linetype = "dotted") +
   geom_line(aes(ymin = lower, ymax = upper)) +
   ylab(expression(paste("Relative ", delta^{15}, "N values (SD)"))) + xlab("Mean AO index (31-28 months)") +
-  theme_classic() #+geom_point(data=Bp_sc, aes(x = Bp_sc$max_AO_dN, y = dN))
+  theme_classic()+standard_theme #+geom_point(data=Bp_sc, aes(x = Bp_sc$max_AO_dN, y = dN))
 
 a<-ggpredict(m1,interval = "confidence") #Confidence instead of prediction intervals can be calculated by explicitly setting interval = "confidence", in which case the random effects variances are ignored.
 #a<-ggpredict(Bp_dN_lm, type = "random")
@@ -157,10 +166,11 @@ plot2 <- plot(a$mean_AMO_dN)+
   geom_ribbon(aes(ymin = conf.low, ymax = conf.high), fill = "#74A9CF", alpha = 0.5,color = "black", linetype = "dotted") +
   geom_line(aes(ymin = conf.low, ymax = conf.high)) +
   ylab(expression(paste("Relative ", delta^{15}, "N values (SD)"))) + xlab(expression(atop("Mean AMO index", atop(italic("(32-27 months)"), "")))) +
-  theme(aspect.ratio=2/4) + ggtitle("") #+geom_point(data=Bp_sc, aes(x = Bp_sc$max_AO_dN, y = dN))
+  theme_article(base_size = 15) +standard_theme + ggtitle("") #+geom_point(data=Bp_sc, aes(x = Bp_sc$max_AO_dN, y = dN))
 
-plot2 <- plot2 + theme_article(base_size = 20)
-plot2
+print(plot2) <- plot2 
+
+source("/Users/marcruizisagales/Documents/GitHub/Climate-baleen-plate-isotopes/analysis/7_statistical_analysis_carbon.R")
 
 plot_final <- plot1 + theme(aspect.ratio = 1) +plot2 + theme(aspect.ratio = 1) +plot3 + theme(aspect.ratio = 1) + 
   plot_layout(ncol = 3) +
@@ -168,7 +178,7 @@ plot_final <- plot1 + theme(aspect.ratio = 1) +plot2 + theme(aspect.ratio = 1) +
                   tag_suffix = ")")
 
 
-plot_final
+print(plot_final)
 
-ggsave("/Users/marcruizisagales/Documents/GitHub/Climate-baleen-plate-isotopes/png/Figure_6_Predicted_trends_from_lmm_final.png", plot_final, 
-       device = png(width = 1200, height = 450))
+ggsave("/Users/marcruizisagales/Documents/GitHub/Climate-baleen-plate-isotopes/png/Figure_6_Predicted_trends_from_lmm_final.png", 
+       last_plot(), dpi=300,  width = 25, height = 20, units = "cm")
