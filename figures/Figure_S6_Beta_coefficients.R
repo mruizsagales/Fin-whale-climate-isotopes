@@ -32,6 +32,21 @@ library(ggtext)
 library(ggeffects)
 library(patchwork)
 
+standard_theme <- theme(
+  #axis.title = element_text(size = 20),   # Axis titles
+  #axis.text = element_text(size = 18),    # Axis text (tick labels)
+  #plot.title = element_text(size = 16),   # Plot title
+  #legend.title = element_text(size = 14), # Legend title
+  legend.text = element_text(size = 12),  # Legend text
+  #strip.text = element_text(size = 20),    # Facet labels, 
+  legend.key.size = unit(0.5, 'cm'), 
+  legend.key.height = unit(0.5, 'cm'), 
+  legend.key.width = unit(0.5, 'cm'),
+  legend.title = element_blank(),
+  legend.position = c(.9, .9),
+  aspect.ratio=3/4
+)
+
 # 2. Load dependencies
 source("/Users/marcruizisagales/Documents/GitHub/Climate-baleen-plate-isotopes/analysis/5_statistical_analysis_nitrogen.R")
 source("/Users/marcruizisagales/Documents/GitHub/Climate-baleen-plate-isotopes/analysis/7_statistical_analysis_carbon.R")
@@ -90,12 +105,14 @@ beta_coef<- ggplot2::ggplot(coefs, aes(Indexs, Estimate, group=model)) +
   geom_errorbar(aes(ymin=Estimate - se, ymax=Estimate + se), width=0.2, position = position_dodge(width=0.5)) +
   geom_point(aes(shape=model, fill=model), position = position_dodge(0.5),size=3, color='black') +
   coord_flip() +
-  scale_x_discrete(breaks=levels,labels=c("Avg NAO index","Avg AMO index")) +
+  scale_x_discrete(breaks=levels,labels=c("Mean NAO index","Mean AMO index")) +
   scale_shape_manual(values = c(21:22),labels = c(expression(paste(delta^15, "N")), expression(paste(delta^13, "C")))) +
   scale_fill_manual(values=c('#FC8D59','#74A9CF'),labels = c(expression(paste(delta^15, "N")), expression(paste(delta^13, "C")))) +
   guides(colour=FALSE) +
   labs(x="", y="Standardized β coefficients") +
-  theme_article(base_size=20) + theme(legend.title = element_blank(),legend.position = c(.9, .9),aspect.ratio=3/4)
+  theme_article(base_size = 15) + 
+  standard_theme
 
-ggsave("/Users/marcruizisagales/Documents/GitHub/Climate-baleen-plate-isotopes/png/Figure_S6_beta_coefficients.png", beta_coef, 
-       device = png(width = 1200, height = 450))
+print(beta_coef)
+
+ggsave("/Users/marcruizisagales/Documents/GitHub/Climate-baleen-plate-isotopes/png/Figure_S6_beta_coefficients.png", last_plot(), dpi=300,  width = 20, height = 15, units = "cm")
