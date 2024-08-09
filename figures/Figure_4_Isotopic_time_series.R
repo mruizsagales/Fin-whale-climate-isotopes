@@ -14,6 +14,19 @@ library(TSA)
 library(RColorBrewer)
 library(patchwork)
 
+standard_theme <- theme(
+  #axis.title = element_text(size = 20),   # Axis titles
+  #axis.text = element_text(size = 18),    # Axis text (tick labels)
+  #plot.title = element_text(size = 16),   # Plot title
+  legend.title = element_text(size = 14), # Legend title
+  legend.text = element_text(size = 12),  # Legend text
+  #strip.text = element_text(size = 15),    # Facet labels, 
+  legend.key.size = unit(0.5, 'cm'), 
+  legend.key.height = unit(0.5, 'cm'), 
+  legend.key.width = unit(0.5, 'cm'),
+  aspect.ratio = 1.5/4
+)
+
 # 2. Import data
 df <- read_excel("/Users/marcruizisagales/Documents/GitHub/Climate-baleen-plate-isotopes/data/All_merged_time_calibrated_2013_to_2022_Suess_cor.xlsx") # Import Suess-corrected dataset of stable isotope data along the baleen plate of fin whales 
 
@@ -35,6 +48,7 @@ cyl_names <- c(
 )
 
 
+
 df$year_rev <- as.Date(df$year_rev)
 rect <- data.frame(xmin=as.Date("2018-07-01"), xmax=as.Date("2019-06-01"), ymin=-Inf, ymax=Inf)
 plot_ts <- ggplot(data=data, aes(x = as.Date(year_rev), y= Isotope, color = Whale)) +
@@ -48,16 +62,14 @@ plot_ts <- ggplot(data=data, aes(x = as.Date(year_rev), y= Isotope, color = Whal
   geom_vline(xintercept = rect$xmax, linetype="dashed", 
              color = "darkgrey") + labs(fill= "Whale ID", color= "Whale ID") +
   scale_fill_manual(values = mycolors) +
-  scale_color_manual(values = mycolors)+ theme_article(base_size=15) + theme(aspect.ratio = 1.5/4, legend.key.size = unit(0.5, 'cm'), 
-                                                legend.key.height = unit(0.5, 'cm'), 
-                                                legend.key.width = unit(0.5, 'cm'),legend.title = element_text(size=10), 
-                                                legend.text = element_text(size=12))
+  scale_color_manual(values = mycolors) + theme_article(base_size = 15) + standard_theme 
 
-plot_ts
 
-ggsave("/Users/marcruizisagales/Documents/GitHub/Climate-baleen-plate-isotopes/png/Figure_4_Isotopic_time_series.png", plot_ts, 
-       device = png(width = 1200, height = 450))
+print(plot_ts)
 
+
+ggsave("/Users/marcruizisagales/Documents/GitHub/Climate-baleen-plate-isotopes/png/Figure_4_Isotopic_time_series.png", last_plot(), 
+       dpi = 300,  width = 20, height = 15, units = "cm")
 
 
 
@@ -71,3 +83,4 @@ ggplot(data, aes(as.factor(Year_from_sample_date),Isotope)) +
   xlab("Year") + 
   ylab(expression(paste("Isotope ratio (\u2030)"))) +
   theme_article(base_size = 15) + theme(aspect.ratio=2/4) 
+
