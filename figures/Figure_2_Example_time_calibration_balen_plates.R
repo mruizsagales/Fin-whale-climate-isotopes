@@ -12,9 +12,19 @@ library(egg)
 library(zoo)
 library(TSA)
 
+standard_theme <- theme(
+  #axis.title = element_text(size = 20),   # Axis titles
+  #axis.text = element_text(size = 18),    # Axis text (tick labels)
+  #plot.title = element_text(size = 16),   # Plot title
+  legend.title = element_text(size = 14), # Legend title
+  legend.text = element_text(size = 12),  # Legend text
+  #strip.text = element_text(size = 15),    # Facet labels
+  aspect.ratio = 3/4
+)
+
 #2. Import data
 
-df <- read_excel("~/Desktop/Doctorat/Analisis_isotops_barbes/0_point_alignments_29_juny_total_-4.xlsx") # Import dataset of the one-centimetre-spaced stable isotope data along the baleen plate of fin whales
+df <- read_excel("/Users/marcruizisagales/Documents/GitHub/Climate-baleen-plate-isotopes/data/0_point_alignments_29_juny_total_-4.xlsx") # Import dataset of the one-centimetre-spaced stable isotope data along the baleen plate of fin whales
 
 min_cm_minus_4 <- whale_isos %>% dplyr::group_by(Whale) %>% dplyr::summarise(min_cm = min(Cm)) # Make sure that all the stable isotope data start at the position -4 cm 
 
@@ -40,7 +50,7 @@ year_labels <- c(2022, 2021,2020)
 year_breaks <- c(45-9,45-25,45-41)
 # = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
 # plot the isotope data
-point_size <- 4
+point_size <- 5
 
 isop <- ggplot(fin_whale, aes(x = rev(Cm))) + 
   theme_classic(base_size = 16) + 
@@ -57,9 +67,9 @@ isop <- isop + geom_line(aes(y = dC), color="black") +
   ylab(expression(paste(delta^{13}, "C (\u2030)")))
 
 # add the d15N data but need to scale it to d13C
-a <- mean(na.omit(KC7$dN))# add the d15N data but need to scale it to d13C
+a <- mean(na.omit(fin_whale$dN))# add the d15N data but need to scale it to d13C
 a
-b <- mean(na.omit(KC7$dC))# add the d15N data but need to scale it to d13C
+b <- mean(na.omit(fin_whale$dC))# add the d15N data but need to scale it to d13C
 b
 v_shift <- a - b
 
@@ -74,11 +84,11 @@ isop <- isop +
                         name = expression(paste(delta^{15}, "N (\u2030)"))))
 
 isop <- isop + geom_vline(xintercept = rev(year_breaks),
-                          color = "grey", lty = 2) + theme(aspect.ratio = 3/4)
+                          color = "grey", lty = 2) + theme_article(base_size = 15) + standard_theme 
 
+print(isop) 
 
-print(isop)
+ggsave("/Users/marcruizisagales/Documents/GitHub/Climate-baleen-plate-isotopes/png/Figure_2_Example_time-estimation_baleen_plates.png", last_plot(), 
+       dpi = 300,  width = 16, height = 12, units = "cm")
+       
 
-ggsave("/Users/marcruizisagales/Documents/GitHub/Climate-baleen-plate-isotopes/png/Figure_2_Example_time-estimation_baleen_plates.png", isop, 
-       device = png(width = 400, height = 300)
-       )
