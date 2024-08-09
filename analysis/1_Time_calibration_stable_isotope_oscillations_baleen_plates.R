@@ -529,8 +529,9 @@ plot_dN_2022/plot_dC_2022
 #__________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________
 
 plot_iso_temp <- (plot_dN_2022+plot_dC_2022) / (plot_dN_2018+plot_dC_2018) / (plot_dN_2015+plot_dC_2015) / (plot_dN_2013+plot_dC_2013) 
-ggsave("/Users/marcruizisagales/Documents/GitHub/Climate-baleen-plate-isotopes/png/Figure_S4_Isotopic_time_series_per_years.png", plot_iso_temp, 
-       device = png(width = 400, height = 600))
+
+ggsave("/Users/marcruizisagales/Documents/GitHub/Climate-baleen-plate-isotopes/png/Figure_S4_Isotopic_time_series_per_years.png", last_plot(), 
+       dpi = 300,  width = 15, height = 20, units = "cm")
 
 merge <- rbind(combined_df_2013,combined_df_2015,combined_df_2018, combined_df_2022)
 
