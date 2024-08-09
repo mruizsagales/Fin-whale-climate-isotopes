@@ -107,67 +107,6 @@ anova(wo_status_model, status_model, test="Chisq") # Decision: Evidence that rep
 
 # 11. Sliding windows
 
-ggplot()
-
-#standardize climate indices
-
-NAO_MEAN <- mean(data_climate$NAO_index, na.rm = TRUE) # Calculate the mean of the response variable
-NAO_SD <- sd(data_climate$NAO_index, na.rm = TRUE) # Calculate the SD of the response variable
-data_climate$NAO_index <- (data_climate$NAO_index - NAO_MEAN) / NAO_SD # Standardize the response variable
-
-AMO_MEAN <- mean(data_climate$AMO_index, na.rm = TRUE) # Calculate the mean of the response variable
-AMO_SD <- sd(data_climate$AMO_index, na.rm = TRUE) # Calculate the SD of the response variable
-data_climate$AMO_index <- (data_climate$AMO_index - AMO_MEAN) / AMO_SD # Standardize the response variable
-
-AMOC_MEAN <- mean(data_climate$AMOC_index, na.rm = TRUE) # Calculate the mean of the response variable
-AMOC_SD <- sd(data_climate$AMOC_index, na.rm = TRUE) # Calculate the SD of the response variable
-data_climate$AMOC_index <- (data_climate$AMOC_index - AMOC_MEAN) / AMOC_SD # Standardize the response variable
-
-data_climate_filt <- data_climate[711:901,]
-install.packages("egg")
-library(egg)
-library(RColorBrewer)
-RColorBrewer::brewer.pal(3, "Greys")
-ggplot(data=data_climate_filt, aes(x=as.Date(data_climate_filt$date))) + 
-  geom_line(aes(y=data_climate_filt$AMOC_index), color= "black", size=1)+ 
-  geom_line(aes(y=data_climate_filt$AMO_index), color=  "#BDBDBD", size=1)+ 
-  geom_line(aes(y=data_climate_filt$NAO_index), color= "#636363", size=1)+ 
-  theme_article(base_size = 15) + 
-  ylab("Climate index") + 
-  xlab("Year") + 
-  theme(aspect.ratio = 2/4) + 
-  scale_x_date(date_breaks = "2 years", date_labels = "%Y")
-
-a <- data.frame(class= rep(c("AMO index", "NAO index","AMOC index"),4), date = c(1,2,3,4,5,6,7,8,9,10,11,12), number= rep(rnorm(1,3,2),12))
-a$class <- factor(a$class, levels= c("NAO index", "AMO index", "AMOC index"))
-col= c("#636363", "#BDBDBD", "black")
-ggplot(data=a, aes(x=date, y=number)) + geom_line(aes(color=class), size=1) + scale_color_manual(values =col) + theme_article()
-
-library(tidyr)
-data_climate_filt_bo <-data_climate_filt[,c("date", "AMO_index", "AMOC_index", "NAO_index")]
-df_long <- data_climate_filt_bo %>%
-  pivot_longer(cols = 2:4,
-               names_to = "climate_index",
-               values_to = "climate_value")
-
-ggplot(data=df_long, aes(x=as.Date(df_long$date))) + 
-  geom_line(aes(y=df_long$climate_value, color= climate_index), size=1)+ 
-
-  theme_article(base_size = 15) + 
-  ylab("Climate index") + 
-  xlab("Year") + 
-  theme(aspect.ratio = 2/4) + 
-  scale_x_date(date_breaks = "2 years", date_labels = "%Y") + facet_wrap(vars(climate_index))
-
-# Print the restructured dataframe
-print(df_long)
-
-#build manual legend for the ggplot
-
-ggplot(data=data_climate_filt, aes(data_climate_filt$AMOC_index,data_climate_filt$NAO_index)) + geom_point() + geom_smooth(method= "lm")
-ggplot(data=data_climate_filt, aes(data_climate_filt$AMOC_index,data_climate_filt$AMO_index)) + geom_point() + geom_smooth(method= "lm")
-ggplot(data=data_climate_filt, aes(data_climate_filt$AMO_index,data_climate_filt$NAO_index)) + geom_point() + geom_smooth(method= "lm")
-
 Bp_dN_clim_m_rel <- 
   climwin::slidingwin(baseline = lme4::lmer(dN ~ 1 + poly(Bp_isotopic_data_use$julian_day,2) + (1| Bp_isotopic_data_use$whale_id), data=Bp_isotopic_data_use),  #this is the base model to which the program adds the climate variables
                       xvar = list(NAO=data_climate$NAO_index,
