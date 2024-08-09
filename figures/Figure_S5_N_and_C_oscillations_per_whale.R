@@ -12,6 +12,21 @@ library(egg)
 library(zoo)
 library(TSA)
 
+standard_theme <- theme(
+  #axis.title = element_text(size = 20),   # Axis titles
+  #axis.text = element_text(size = 18),    # Axis text (tick labels)
+  #plot.title = element_text(size = 16),   # Plot title
+  #legend.title = element_text(size = 14), # Legend title
+  legend.text = element_text(size = 12),  # Legend text
+  #strip.text = element_text(size = 15),    # Facet labels, 
+  legend.key.size = unit(0.5, 'cm'), 
+  legend.key.height = unit(0.5, 'cm'), 
+  legend.key.width = unit(0.5, 'cm'),
+  aspect.ratio = 2/4,
+  legend.title = element_blank(), 
+  legend.position = c(0.95,0.1)
+)
+
 # 2. Import data
 fw.data_d13cor <- read_excel("/Users/marcruizisagales/Documents/GitHub/Climate-baleen-plate-isotopes/data/All_merged_time_calibrated_2013_to_2022_Suess_cor.xlsx")
 
@@ -42,13 +57,10 @@ v_shift <- a - b
 isop <- isop + geom_line(aes(y = dN - v_shift), col = "#74A9CF") + 
   geom_point(aes(y = (dN - v_shift), fill = "dN"), size = point_size, 
              shape = 21, col="white")+ facet_wrap(vars(Whale), ncol = 6) + 
-  scale_y_continuous(sec.axis = sec_axis(~.+v_shift, name = expression(paste(delta^{15}, "N (\u2030)")))) +
-  
-  ### Set aspect ratio of the graph n/n = square
-  theme(aspect.ratio=2/4)
+  scale_y_continuous(sec.axis = sec_axis(~.+v_shift, name = expression(paste(delta^{15}, "N (\u2030)")))) 
 
-its_per_whale <- isop + theme_article(base_size = 15) + scale_fill_manual(values = legend, labels = c(expression(paste(delta^{13}, "C (\u2030)")), expression(paste(delta^{15}, "N (\u2030)")))) + theme(legend.title = element_blank(), legend.position = c(0.95,0.1))
-its_per_whale
+its_per_whale <- isop + theme_article(base_size = 15) + scale_fill_manual(values = legend, labels = c(expression(paste(delta^{13}, "C (\u2030)")), expression(paste(delta^{15}, "N (\u2030)")))) + standard_theme
+print(its_per_whale)
 
-ggsave("/Users/marcruizisagales/Documents/GitHub/Climate-baleen-plate-isotopes/png/Figure_S5_Isotopic_oscillations_per_whale.png", its_per_whale, 
-       device = png(width = 1200, height = 800))
+ggsave("/Users/marcruizisagales/Documents/GitHub/Climate-baleen-plate-isotopes/png/Figure_S5_Isotopic_oscillations_per_whale.png", last_plot(), dpi=300,  width = 30, height = 15, units = "cm")
+
