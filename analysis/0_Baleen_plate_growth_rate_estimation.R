@@ -82,8 +82,8 @@ p2 <- periodogram(na.approx(whaleF13066$dN)) #k=1
 #p2 <- periodogram(na.approx(whaleF13066$dC)) #k=1
 periodogramText(p2, k = 1) #periode de 15 cm
 
-ccf_p2 <- ccf(whaleF13066$dC, whaleF13066$dN, lag.max = 10, plot = TRUE)
-ccf_p2_text <- Find_Max_CCF(whaleF13066$dC, whaleF13066$dN) #cor 0.661634 and lag 3
+ccf_p2 <- ccf(na.approx(whaleF13066$dC), na.approx(whaleF13066$dN), lag.max = 10, plot = TRUE)
+ccf_p2_text <- Find_Max_CCF(na.approx(whaleF13066$dC), na.approx(whaleF13066$dN)) #cor 0.661634 and lag 3
 ccf_p2_text 
 # = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
 # Whale F13068= = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
@@ -93,8 +93,8 @@ p3 <- periodogram(na.approx(whaleF13068$dN)) #k=1
 #p3 <- periodogram(na.approx(whaleF13068$dC)) #k=4
 periodogramText(p3, k = 1) #periode de 15 cm
 
-ccf_p3 <- ccf(whaleF13068$dC, whaleF13068$dN, lag.max = 10, plot = TRUE)
-ccf_p3_text <- Find_Max_CCF(whaleF13068$dC, whaleF13068$dN) #cor 0.5142207 and lag 7
+ccf_p3 <- ccf(na.approx(whaleF13068$dC), na.approx(whaleF13068$dN), lag.max = 10, plot = TRUE)
+ccf_p3_text <- Find_Max_CCF(na.approx(whaleF13068$dC), na.approx(whaleF13068$dN)) #cor 0.5142207 and lag 7
 ccf_p3_text
 # = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
 # Whale F13073= = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
@@ -104,8 +104,8 @@ p4 <- periodogram(na.approx(whaleF13073$dN)) #k=1
 #p4 <- periodogram(na.approx(whaleF13073$dC)) #k=1
 p4_text <- periodogramText(p4, k = 1) #periode de 15 cm
 
-ccf_p4 <- ccf(whaleF13073$dC, whaleF13073$dN, lag.max = 10, plot = TRUE)
-ccf_p4_text <- Find_Max_CCF(whaleF13073$dC, whaleF13073$dN) #cor 0.5062958 and lag 3
+ccf_p4 <- ccf(na.approx(whaleF13073$dC), na.approx(whaleF13073$dN), lag.max = 10, plot = TRUE)
+ccf_p4_text <- Find_Max_CCF(na.approx(whaleF13073$dC), na.approx(whaleF13073$dN)) #cor 0.5062958 and lag 3
 ccf_p4_text
 # = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
 # Whale F13076= = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
@@ -161,8 +161,8 @@ p9 <- periodogram(na.approx(whaleF15083$dN)) #k=2
 #p9 <- periodogram(na.approx(whaleF15083$dC)) #k=1
 periodogramText(p9, k = 2) #periode de 15 cm
 
-ccf_p9 <- ccf(whaleF15083$dC, whaleF15083$dN, lag.max = 10, plot = TRUE)
-ccf_p9_text <- Find_Max_CCF(whaleF15083$dC, whaleF15083$dN) #cor 0.672713 and lag 0
+ccf_p9 <- ccf(na.approx(whaleF15083$dC), na.approx(whaleF15083$dN), lag.max = 10, plot = TRUE)
+ccf_p9_text <- Find_Max_CCF(na.approx(whaleF15083$dC), na.approx(whaleF15083$dN)) #cor 0.672713 and lag 0
 ccf_p9_text 
 # = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
 # Whale F15080= = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
@@ -173,8 +173,8 @@ p10 <- periodogram(na.approx(whaleF15080$dC)) #k=1
 #periodogramText(p10, k = 5) #periode de 16 cm amb nitrogen k=4
 periodogramText(p10, k = 1) #periode de 16 cm amb carboni k=1
 
-ccf_p10 <- ccf(whaleF15080$dC, whaleF15080$dN, lag.max = 10, plot = TRUE)
-ccf_p10_text <- Find_Max_CCF(whaleF15080$dC, whaleF15080$dN) #cor 0.461124 and lag 2
+ccf_p10 <- ccf(na.approx(whaleF15080$dC),na.approx(whaleF15080$dN), lag.max = 10, plot = TRUE)
+ccf_p10_text <- Find_Max_CCF(na.approx(whaleF15080$dC),na.approx(whaleF15080$dN)) #cor 0.461124 and lag 2
 ccf_p10_text 
 # = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
 # Whale F15079 (Lactating) = = = = = = = = = = = = = = = = = = = = = = = = 
@@ -268,8 +268,8 @@ par(mfrow = c(1, 1))
 p18 <- periodogram(na.approx(whaleF18050$dC)) #k=1
 periodogramText(p18, k = 1) #periode de 16.7 cm
 
-ccf_p18 <- ccf(whaleF18050$dC, whaleF18050$dN, lag.max = 10, plot = TRUE)
-ccf_p18_text <- Find_Max_CCF(whaleF18050$dC, whaleF18050$dN) #cor 0.5639275 and lag -11
+ccf_p18 <- ccf(na.approx(whaleF18050$dC), na.approx(whaleF18050$dN), lag.max = 10, plot = TRUE)
+ccf_p18_text <- Find_Max_CCF(na.approx(whaleF18050$dC), na.approx(whaleF18050$dN)) #cor 0.5639275 and lag -11
 ccf_p18_text 
 # = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
 # Whale F18051= = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
@@ -418,7 +418,6 @@ ccf_p31 <- ccf(na.approx(whaleF22056$dC), na.approx(whaleF22056$dN), lag.max = 1
 ccf_p31_text <- Find_Max_CCF(na.approx(whaleF22056$dC), na.approx(whaleF22056$dN)) #cor 0.5490016 and lag 0
 ccf_p31_text 
 # = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
-
 
 #mean growth rate = 16.07097 ± 2.459565 cm/year
 mean(c(15,15,15,15,15,
