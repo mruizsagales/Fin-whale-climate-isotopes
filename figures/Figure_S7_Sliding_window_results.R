@@ -31,6 +31,21 @@ library(ggtext)
 library(ggeffects)
 library(patchwork)
 
+standard_theme <- theme(
+  #axis.title = element_text(size = 20),   # Axis titles
+  #axis.text = element_text(size = 18),    # Axis text (tick labels)
+  #plot.title = element_text(size = 16),   # Plot title
+  #legend.title = element_text(size = 14), # Legend title
+  legend.text = element_text(size = 12),  # Legend text
+  #strip.text = element_text(size = 20),    # Facet labels, 
+  legend.key.size = unit(0.5, 'cm'), 
+  legend.key.height = unit(0.5, 'cm'), 
+  legend.key.width = unit(0.5, 'cm'),
+  legend.title = element_blank(),
+  legend.position = c(.9, .9),
+  aspect.ratio=3/4
+)
+
 # 2. Load dependencies
 source("/Users/marcruizisagales/Documents/GitHub/Climate-baleen-plate-isotopes/analysis/4_sliding_window_nitrogen.R")
 source("/Users/marcruizisagales/Documents/GitHub/Climate-baleen-plate-isotopes/analysis/6_sliding_window_carbon.R")
@@ -64,8 +79,8 @@ m1 <- ggplot(data) +
   geom_hline(yintercept = 0, lty = 1, lwd = 1, colour = "black") +
   coord_flip() +
   labs(x = "", y = "Months from sample", title = "") +
-  theme_article(base_size = 20) + ylim(36,0)+
-  scale_x_discrete(breaks=levels,labels=c("Avg NAO index","Avg AMO index")) + theme(aspect.ratio=3/4)
+  theme_article(base_size = 15) + ylim(36,0)+
+  scale_x_discrete(breaks=levels,labels=c("Avg NAO index","Avg AMO index")) + standard_theme
 
 m1
 
@@ -89,8 +104,8 @@ m2 <- ggplot(data1) +
   geom_hline(yintercept = 0, lty = 1, lwd = 1, colour = "black") +
   coord_flip() +
   labs(x = "", y = "Months from sample", title = "") +
-  theme_article(base_size = 20) + ylim(36,0)+
-  scale_x_discrete(breaks=levels1,labels=c("Avg AMO index")) + theme(aspect.ratio=3/4)
+  theme_article(base_size = 15) + ylim(36,0)+
+  scale_x_discrete(breaks=levels1,labels=c("Avg AMO index")) + standard_theme
 
 m1+m2
 
@@ -103,10 +118,9 @@ m3 <- ggplot(data) +
   geom_hline(yintercept = 0, lty = 1, lwd = 1, colour = "black") +
   geom_linerange(data=data1, aes(x = Index, ymin = WindowOpen, ymax = WindowClose), color = '#FC8D59', size = 20, alpha =0.9) +  # Afegeix les línies de separació
   coord_flip() +
-  labs(x = "", y = "Time from last keratin sample (months)", title = "") +
-  theme_article(base_size = 20) + ylim(36,0)+
-  scale_x_discrete(breaks=levels,labels=c("Avg NAO index","Avg AMO index")) + theme(aspect.ratio=3/4)
+  labs(x = "", y = "Time to baleen segment (months)", title = "") +
+  theme_article(base_size = 15) + ylim(36,0)+
+  scale_x_discrete(breaks=levels,labels=c("Mean NAO index","Mean AMO index")) + standard_theme
 m3
 
-ggsave("/Users/marcruizisagales/Documents/GitHub/Climate-baleen-plate-isotopes/png/Figure_S7_Sliding_window_results.png", m3, 
-       device = png(width = 1200, height = 450))
+ggsave("/Users/marcruizisagales/Documents/GitHub/Climate-baleen-plate-isotopes/png/Figure_S7_Sliding_window_results.png", last_plot(), dpi=300,  width = 20, height = 15, units = "cm")
