@@ -3,6 +3,21 @@
 #Figure 1 - Iceland map with fin whale catch positions
 #--------------------------------------------------------------------------------
 
+standard_theme <- theme(
+  #axis.title = element_text(size = 20),   # Axis titles
+  #axis.text = element_text(size = 18),    # Axis text (tick labels)
+  #plot.title = element_text(size = 16),   # Plot title
+  legend.title = element_text(size = 10), # Legend title
+  legend.text = element_text(size = 10),  # Legend text
+  #strip.text = element_text(size = 20),    # Facet labels
+  legend.position = c(0.9,0.15),
+  legend.background = element_rect(fill=alpha('white', 0.2)),
+  legend.key.size = unit(0.1, 'cm'), 
+  legend.key.height = unit(0.2, 'cm'), 
+  legend.key.width = unit(0.3, 'cm'),
+  plot.margin = margin(2, 2, 2, 2, "cm")
+)
+
 # 1. Load libraries
 library(tidyverse)
 library(lubridate)
@@ -110,21 +125,16 @@ b <- ggplot(data = world) +
   #geom_point(data = points_labels, aes(x = lat, y = lon), color = "red", size = 1) +
   geom_text(data = points_labels, aes(x = lat, y = lon, label = label, fontface=face), vjust = -0.5, color=color) + labs(x = "Longitude", y = "Latitude", fill = "Whale ID") +
   geom_point(data=points_whales, aes(lon, lat), shape= 21, size=2, fill= mycolors, color="black")  + xlab("Longitude") + ylab("Latitude") +
-  theme_article(base_size = 15) + theme(#aspect.ratio = 1,
-                                        legend.position = c(0.9,0.1),
-                                        legend.background = element_rect(fill=alpha('white', 0.2)),
-                                        legend.text=element_text(size=8),
-                                        legend.title=element_text(size=8),
-                                        legend.key.size = unit(0.1, 'cm'), 
-                                        legend.key.height = unit(0.2, 'cm'), 
-                                        legend.key.width = unit(0.3, 'cm'),
-                                        plot.margin = margin(2, 2, 2, 2, "cm"))#+ geom_text(data=bat_labels, aes(x = lon, y = lat, label = label), size=2.5, col="black")
+  theme_article(base_size = 15) + standard_theme
+                                        #+ geom_text(data=bat_labels, aes(x = lon, y = lat, label = label), size=2.5, col="black")
 
-b
 
-ggsave("/Users/marcruizisagales/Documents/GitHub/Climate-baleen-plate-isotopes/png/Figure_1_Iceland_map_with_fin_whale_catch_positions.png", b, 
-       device = png(width = 600, height = 400)
-)
+print(b)  
+
+
+ggsave("/Users/marcruizisagales/Documents/GitHub/Climate-baleen-plate-isotopes/png/Figure_1_Iceland_map_with_fin_whale_catch_positions.png", last_plot(), 
+       dpi = 300,  width = 20, height = 15, units = "cm")
+
 
 
 b <- ggplot(data = world) +
@@ -138,19 +148,24 @@ b <- ggplot(data = world) +
   #geom_point(data = points_labels, aes(x = lat, y = lon), color = "red", size = 1) +
   geom_text(data = points_labels, aes(x = lat, y = lon, label = label, fontface=face), vjust = -0.5, color=color) + labs(x = "Longitude", y = "Latitude", fill = "Whale ID") +
   geom_point(data=points_whales, aes(lon, lat, fill=Whales), shape= 21, size=2)  + xlab("Longitude") + ylab("Latitude") +
-  theme_article(base_size = 15) + theme(legend.background = element_rect(fill=alpha('white', 0.2)),
-                                        legend.text=element_text(size=8),
-                                        legend.title=element_text(size=8),
-                                        legend.key.size = unit(0.1, 'cm'), #change legend key size
-                                        legend.key.height = unit(0.2, 'cm'), #change legend key height
-                                        legend.key.width = unit(0.3, 'cm'),
-                                        plot.margin = margin(2, 2, 2, 2, "cm")) + scale_fill_manual("Whale ID", values=mycolors) + theme_article(base_size = 15) #+ geom_text(data=bat_labels, aes(x = lon, y = lat, label = label), size=2.5, col="black")
+  theme_article(base_size = 15) + theme(
+  #axis.title = element_text(size = 20),   # Axis titles
+  #axis.text = element_text(size = 18),    # Axis text (tick labels)
+  #plot.title = element_text(size = 16),   # Plot title
+  legend.title = element_text(size = 10), # Legend title
+  legend.text = element_text(size = 10),  # Legend text
+  #strip.text = element_text(size = 15),    # Facet labels
+  legend.background = element_rect(fill=alpha('white', 0.2)),
+  legend.key.size = unit(0.1, 'cm'), 
+  legend.key.height = unit(0.2, 'cm'), 
+  legend.key.width = unit(0.3, 'cm'),
+  plot.margin = margin(2, 2, 2, 2, "cm")
+) + scale_fill_manual("Whale ID", values=mycolors)  #+ geom_text(data=bat_labels, aes(x = lon, y = lat, label = label), size=2.5, col="black")
 
 b
 
-ggsave("/Users/marcruizisagales/Documents/GitHub/Climate-baleen-plate-isotopes/png/Figure_1_Iceland_map_with_fin_whale_catch_positions_alternative.png", b, 
-       device = png(width = 600, height = 400)
-)
 
+ggsave("/Users/marcruizisagales/Documents/GitHub/Climate-baleen-plate-isotopes/png/Figure_1_Iceland_map_with_fin_whale_catch_positions_alternative.png", last_plot(), 
+       dpi = 300,  width = 20, height = 15, units = "cm")
 
 
