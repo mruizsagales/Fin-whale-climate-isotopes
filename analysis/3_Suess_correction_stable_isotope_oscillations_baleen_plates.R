@@ -67,9 +67,11 @@ fw.data_d13cor_summary_whale <- fw.data_d13cor %>% dplyr::group_by(Whale) %>% dp
                                                  dC_max= max(d13c.cor, na.rm=T),
                                                  dC_range= max(d13c.cor, na.rm=T)-min(d13c.cor, na.rm=T))
 
+#overall
 range(fw.data_d13cor$dN, na.rm=T)
 range(fw.data_d13cor$d13c.cor)
 
+#per whale
 mean(fw.data_d13cor_summary_whale$dN_range)
 sd(fw.data_d13cor_summary_whale$dN_range)
 
