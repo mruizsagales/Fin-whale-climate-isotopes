@@ -112,8 +112,8 @@ m1+m2
 # Toghether 
 
 m3 <- ggplot(data) +
-  geom_vline(aes(xintercept = data$Index), color = "gray", linetype = "dotted") +
-  geom_linerange(aes(x = data$Index, ymin = WindowOpen, ymax = WindowClose), color = '#74A9CF', size = 20, alpha = 0.9) +  # Afegeix les línies de separació
+  geom_vline(aes(xintercept = Index), color = "gray", linetype = "dotted") +
+  geom_linerange(aes(x = Index, ymin = WindowOpen, ymax = WindowClose), color = '#74A9CF', size = 20, alpha = 0.9) +  # Afegeix les línies de separació
   geom_hline(yintercept = seq(1,48,1), lty = 1, lwd = 0.1, colour = "white") +
   geom_hline(yintercept = 0, lty = 1, lwd = 1, colour = "black") +
   geom_linerange(data=data1, aes(x = Index, ymin = WindowOpen, ymax = WindowClose), color = '#FC8D59', size = 20, alpha =0.9) +  # Afegeix les línies de separació
