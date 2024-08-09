@@ -56,8 +56,10 @@ print(correlation_matrix)
 corrplot(correlation_matrix, method="color", tl.col="black")
 
 corplo_N <- ggcorrplot(correlation_matrix)
-ggsave("/Users/marcruizisagales/Documents/GitHub/Climate-baleen-plate-isotopes/png/Figure_S1_Corrplot_nitrogen.png", corplo_N, 
-       device = png(width = 600, height = 600))
+print(corplo_N)
+
+ggsave("/Users/marcruizisagales/Documents/GitHub/Climate-baleen-plate-isotopes/png/Figure_S1_Corrplot_nitrogen.png", last_plot(), 
+       dpi = 300,  width = 20, height = 20, units = "cm")
 
 mean(correlation_matrix) # Average correlation between the nitrogen oscillations of different individuals
 
@@ -92,8 +94,10 @@ print(correlation_matrix)
 corrplot(correlation_matrix, method="color", tl.col="black")
 
 corplo_C <- ggcorrplot(correlation_matrix)
-ggsave("/Users/marcruizisagales/Documents/GitHub/Climate-baleen-plate-isotopes/png/Figure_S2_Corrplot_carbon.png", corplo_C, 
-       device = png(width = 600, height = 600))
+print(corplo_C)
+
+ggsave("/Users/marcruizisagales/Documents/GitHub/Climate-baleen-plate-isotopes/png/Figure_S2_Corrplot_carbon.png", last_plot(), 
+       dpi = 300,  width = 20, height = 20, units = "cm")
 
 mean(correlation_matrix) # Average correlation between the carbon oscillations of different individuals
 
@@ -124,10 +128,6 @@ for (i in 1:num_whales) {
 # Print or use the correlation matrix as needed
 print(correlation_matrix)
 
-# Plot the correlation matrix
-color_palette <- colorRampPalette(viridis::viridis(100))(29)
-corrplot(correlation_matrix, method="color", tl.col="black", col = rev(color_palette))
-
 mean(correlation_matrix) # Average correlation between the nitrogen and carbon oscillations of the same individual
 
 whales <- rownames(correlation_matrix) # whale code
@@ -145,5 +145,7 @@ NvC <- ggplot(ccf_whales, aes(x = whales, y = ccf, fill = ccf)) +
   theme_article(base_size = 15) +
   theme(axis.text.x=element_text(angle=90, hjust=1), legend.position = c(0.9,0.8), aspect.ratio = 3/4) + labs(fill = "CCF")
 
+print(NvC)
+
 ggsave("/Users/marcruizisagales/Documents/GitHub/Climate-baleen-plate-isotopes/png/Figure_S3_corr_N_C.png", NvC, 
-       device = png(width = 600, height = 400))
+       dpi = 300,  width = 20, height = 20, units = "cm")
