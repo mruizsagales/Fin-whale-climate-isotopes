@@ -18,6 +18,19 @@ library(nortest)
 library(car)
 library(SuessR)
 
+standard_theme <- theme(
+  #axis.title = element_text(size = 20),   # Axis titles
+  #axis.text = element_text(size = 18),    # Axis text (tick labels)
+  #plot.title = element_text(size = 16),   # Plot title
+  legend.title = element_text(size = 14), # Legend title
+  legend.text = element_text(size = 12),  # Legend text
+  #strip.text = element_text(size = 15),    # Facet labels, 
+  legend.key.size = unit(0.5, 'cm'), 
+  legend.key.height = unit(0.5, 'cm'), 
+  legend.key.width = unit(0.5, 'cm'),
+  aspect.ratio = 3/4
+)
+
 # 2. Import data
 
 data <- read_excel("~/Desktop/Doctorat/Analisis_isotops_barbes/Clima/Data/Krill_Islandia.xlsx", sheet = "Hoja2")
@@ -39,7 +52,7 @@ krill_N <- ggplot(data, aes(as.factor(any),dN)) +
   #stat_summary(fun.y=mean, geom="point", shape=20, size=2, color="red", fill="red") +
   xlab("Year") + 
   ylab(expression(paste(delta^{15}, "N (‰)"))) + 
-  theme_article(base_size = 15) + theme(aspect.ratio = 3/4)
+  theme_article(base_size = 15) + standard_theme 
 krill_N
 
 # 4. Boxplot for carbon
@@ -49,7 +62,7 @@ krill_C<- ggplot(data, aes(as.factor(any),dC)) +
   #stat_summary(fun.y=mean, geom="point", shape=20, size=2, color="red", fill="red") +
   xlab("Year") + 
   ylab(expression(paste(delta^{15}, "C (‰)"))) + 
-  theme_article(base_size = 20) 
+  theme_article(base_size = 20) + standard_theme 
 krill_C
 
 #4.2. Boxplot for corrected carbon
@@ -67,17 +80,17 @@ krill_C_cor<- ggplot(data_cor_suess, aes(as.factor(year),d13c.cor)) +
   #stat_summary(fun.y=mean, geom="point", shape=20, size=2, color="red", fill="red") +
   xlab("Year") + 
   ylab(expression(paste(delta^{15}, "C (‰)"))) + 
-  theme_article(base_size = 15) 
+  theme_article(base_size = 15) + standard_theme 
 krill_C_cor
 
 plot <- krill_N + krill_C_cor +
   patchwork::plot_annotation(tag_levels = "a", 
                   tag_suffix = ")")
 
-plot
-ggsave("/Users/marcruizisagales/Documents/GitHub/Climate-baleen-plate-isotopes/png/Figure_5_krill_boxplots.png", plot, 
-       device = png(width = 600, height = 400)
-)
+print(plot)
+
+ggsave("/Users/marcruizisagales/Documents/GitHub/Climate-baleen-plate-isotopes/png/Figure_5_krill_boxplots.png", last_plot(), 
+       dpi = 300,  width = 20, height = 15, units = "cm")
 
 # 5. Perform ANOVA
 data$any <- as.factor(data$any)
