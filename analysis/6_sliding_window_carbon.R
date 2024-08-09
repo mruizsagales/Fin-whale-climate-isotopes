@@ -32,12 +32,12 @@ min(df$year_rev) # first date: "2010-07-11 UTC"
 max(df$year_rev) # last date: "2022-07-30 UTC"
 
 # 3. Load monthly weather data
-data_climate <- read_excel("~/Desktop/Paper_climate/Datasets_paper_clim/merged_climate_cycles_dated_ts.xlsx")
+data_climate <- read_excel("/Users/marcruizisagales/Desktop/Papers/Paper_climate/Datasets_paper_clim/merged_climate_cycles_dated_ts.xlsx") #load climate data
 data_climate<- as.data.frame(data_climate)
 data_climate$Date <- as.Date(data_climate$date)
 data_climate$date_use <- format(data_climate$Date, format= "%d/%m/%Y")
 
-data_env <- read_excel("~/Desktop/Paper_climate/Datasets_paper_clim/Env_total_13_nov.xlsx")
+data_env <- read_excel("/Users/marcruizisagales/Desktop/Papers/Paper_climate/Datasets_paper_clim/Env_total_13_nov.xlsx") # load environmental data
 data_env<- as.data.frame(data_env)
 data_env$Date <- as.Date(data_env$Date)
 
