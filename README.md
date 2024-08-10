@@ -1,5 +1,7 @@
 # Baleen stable isotopes reveal climate-driven behavioural shifts in North Atlantic fin whales
 
+[![DOI](https://zenodo.org/badge/{github_id}.svg)](https://zenodo.org/badge/latestdoi/{github_id})
+
 This repository provides the R code that accompanies the article:
 
 Marc Ruiz-Sagalés, Raquel García-Vernet, Josep Sanchez-Espigares, Sverrir D. Halldórsson, Valerie Chosson, Guðjón M. Sigurðsson, Asunción Borrell & Alex Aguilar. Baleen stable isotopes reveal climate-driven behavioural shifts in North Atlantic fin whales. **Science of The Total Environment**. (doi:)
