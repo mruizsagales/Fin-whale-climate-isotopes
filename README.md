@@ -1,6 +1,6 @@
 # Baleen stable isotopes reveal climate-driven behavioural shifts in North Atlantic fin whales
 
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.13121149.svg)](https://doi.org/10.5281/zenodo.13121149)
+[![DOI](https://zenodo.org/badge/761689798.svg)](https://zenodo.org/doi/10.5281/zenodo.13291999)
 
 This repository provides the R code that accompanies the article:
 
