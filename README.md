@@ -4,7 +4,30 @@ Climate variability determines structure and functioning of marine ecosystems an
 
 ![image](https://github.com/user-attachments/assets/942cd0aa-13a6-4e53-b4ff-70195825c496)
 
+Requirements
 
+R-studio with R >= 3.6.0
+
+Repository structure
+
+| Folder | Description |
+| --- | --- |
+| 1_data | Data used for the paper. |
+| 2_analysis | Scripts used to analyse the data. |
+| 3_figures | Scripts used to build the figures. |
+| 4_png | Figures from the paper. |
+
+Data availability
+
+Correspondence and requests for baleen stable isotope data should be addressed to Alex Aguilar (aaguilar at ub.edu) and Asunción Borrell (xonborrell at ub.edu). 
+
+License
+
+Copyright (c) 2024 Marc Ruiz-Sagalés Licensed under the MIT license.
+
+Acknowledgements
+
+This study was part of project PID2020-119712GB-I00 funded by MICIU/AEI/10.13039/501100011033. Marc Ruiz-Sagalés was supported by pre-doctoral contract PRE2021-098656 funded by MICIU/AEI/10.13039/501100011033 and by FSE+. We thank the MFRI staff for assistance and logistic support during the fieldwork and the sample shipment, and to Kristján Loftsson for kindly providing facilities to conduct sampling at the Hvalur whaling station. Samples were also provided by the Banco Medioambiental de Tejidos Biológicos managed by the Fundació Bosch i Gimpera. The stable isotope analyses were conducted at the Centres Científics i Tecnològics (CCiT-UB) of the University of Barcelona, where we would like to thank Pilar Rubio for her support during laboratory work. Marc Ruiz-Sagalés extends special thanks to Casey T. Clark for his recommendations regarding the “RSuess” package and Javier Martin-Vide for his advice on climate variables.
 
 
 
