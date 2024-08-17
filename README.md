@@ -10,8 +10,6 @@ Climate variability determines structure and functioning of marine ecosystems an
 
 ![image](https://github.com/user-attachments/assets/28254746-d5db-49e0-8324-33bbe03089dd)
 
-
-
 ## Requirements
 
 R-studio with R >= 3.6.0
