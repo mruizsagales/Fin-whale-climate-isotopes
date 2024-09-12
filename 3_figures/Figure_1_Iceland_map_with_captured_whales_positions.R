@@ -39,11 +39,17 @@ library(marmap)
 
 # 2. Import data
 
-data <- read_excel("/Users/marcruizisagales/Desktop/Doctorat/Analisis_isotops_barbes/Projecte_barbes_clima/Inventari_barbes_Marc-2.xlsx")
+data <- read_excel("/Users/marcruizisagales/Desktop/Doctorat/Analisis_isotops_barbes/Projecte_barbes_clima/Inventari_barbes_Marc-3.xlsx")
 
 data<- dplyr::filter(data, data$Feta == "Si") # sampled yes
 data <- dplyr::filter(data, data$Hyb == "No") # hybrids no
+data <- dplyr::filter(data, data$Year %in% c(2013,2015,2018,2022)) # check and filter study years
+`%not_in%` <- purrr::negate(`%in%`)
+data <- dplyr::filter(data, data$ID %not_in% c("F18066")) # remove this individual as it was analysed recently
 
+length(unique(data$ID)) #29
+
+data%>%dplyr::group_by(Year)%>%summarise(n= n()) # check that sample sizes in 2013 is 6, in 2016 is 9, in 2018 is 10 and in 2022 is 4 individuals
 
 # 3. Convert longitude and latitude from degrees, minutes and seconds to decimal units with ´lonsex2dec´ and ´latsex2dec´functions.
 
@@ -129,10 +135,10 @@ b <- ggplot(data = world) +
                                         #+ geom_text(data=bat_labels, aes(x = lon, y = lat, label = label), size=2.5, col="black")
 
 
-print(b)  
+print(b)
 
 
-ggsave("/Users/marcruizisagales/Documents/GitHub/Climate-baleen-plate-isotopes/png/Figure_1_Iceland_map_with_fin_whale_catch_positions.png", last_plot(), 
+ggsave("/Users/marcruizisagales/Documents/GitHub/Climate-baleen-plate-isotopes/4_png/Figure_1_Iceland_map_with_fin_whale_catch_positions.png", last_plot(), 
        dpi = 300,  width = 20, height = 15, units = "cm")
 
 
@@ -165,7 +171,7 @@ b <- ggplot(data = world) +
 b
 
 
-ggsave("/Users/marcruizisagales/Documents/GitHub/Climate-baleen-plate-isotopes/png/Figure_1_Iceland_map_with_fin_whale_catch_positions_alternative.png", last_plot(), 
+ggsave("/Users/marcruizisagales/Documents/GitHub/Climate-baleen-plate-isotopes/4_png/Figure_1_Iceland_map_with_fin_whale_catch_positions_alternative.png", last_plot(), 
        dpi = 300,  width = 20, height = 15, units = "cm")
 
 
