@@ -41,15 +41,18 @@ library(marmap)
 
 data <- read_excel("/Users/marcruizisagales/Desktop/Doctorat/Analisis_isotops_barbes/Projecte_barbes_clima/Inventari_barbes_Marc-3.xlsx")
 
+
 data<- dplyr::filter(data, data$Feta == "Si") # sampled yes
 data <- dplyr::filter(data, data$Hyb == "No") # hybrids no
 data <- dplyr::filter(data, data$Year %in% c(2013,2015,2018,2022)) # check and filter study years
 `%not_in%` <- purrr::negate(`%in%`)
 data <- dplyr::filter(data, data$ID %not_in% c("F18066")) # remove this individual as it was analysed recently
+data <- dplyr::filter(data, data$Year %not_in% c(2023)) # remove this individual as it was analysed recently
 
 length(unique(data$ID)) #29
 
-data%>%dplyr::group_by(Year)%>%summarise(n= n()) # check that sample sizes in 2013 is 6, in 2016 is 9, in 2018 is 10 and in 2022 is 4 individuals
+a<-data%>%dplyr::group_by(Year)%>%summarise(n= n()) # check that sample sizes in 2013 is 6, in 2016 is 9, in 2018 is 10 and in 2022 is 4 individuals
+a
 
 # 3. Convert longitude and latitude from degrees, minutes and seconds to decimal units with ´lonsex2dec´ and ´latsex2dec´functions.
 
@@ -93,6 +96,8 @@ points_labels <- # geographical labels
 color= c("black", "black", "black") #for geographical labels
 
 points_whales <- data.frame(lon = data$LonDEC, lat = data$LatDEC, var = c("2013", "2013","2013","2013","2013","2013","2015","2015","2015","2015","2015","2015","2015","2015","2015","2018","2018","2018","2018","2018","2018","2018","2018","2018","2018","2022","2022","2022","2022"))
+
+points_whales <- data.frame(lon= data$LonDEC, lat= data$LatDEC, var = data$Year)
 points_whales$Whales <- data$ID
 
 world <- ne_countries(scale = "large", returnclass = "sf") # world map
@@ -106,7 +111,7 @@ tmp<- marmap::readGEBCO.bathy(bathy_fname)
 bat_xyz <- as.xyz(tmp)
 bat_xyz <- dplyr::filter(bat_xyz, V3<=0)
 
-nb.cols <- 29
+nb.cols <- 72
 mycolors <- colorRampPalette(brewer.pal(9, "RdYlBu"))(nb.cols) # color palette points
 
 nb.cols <- 100
@@ -170,8 +175,8 @@ b <- ggplot(data = world) +
 
 b
 
-
 ggsave("/Users/marcruizisagales/Documents/GitHub/Climate-baleen-plate-isotopes/4_png/Figure_1_Iceland_map_with_fin_whale_catch_positions_alternative.png", last_plot(), 
        dpi = 300,  width = 20, height = 15, units = "cm")
+
 
 
