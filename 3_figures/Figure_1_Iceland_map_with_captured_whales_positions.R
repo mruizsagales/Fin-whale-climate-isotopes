@@ -175,6 +175,7 @@ b <- ggplot(data = world) +
 
 b
 
+
 ggsave("/Users/marcruizisagales/Documents/GitHub/Climate-baleen-plate-isotopes/4_png/Figure_1_Iceland_map_with_fin_whale_catch_positions_alternative.png", last_plot(), 
        dpi = 300,  width = 20, height = 15, units = "cm")
 
