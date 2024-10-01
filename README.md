@@ -25,7 +25,7 @@ R-studio with R >= 3.6.0
 
 ## Data availability 
 
-Correspondence and requests for baleen stable isotope data should be addressed to Alex Aguilar (aaguilar at ub.edu) and Asunción Borrell (xonborrell at ub.edu). 
+Requests for baleen stable isotope data should be addressed to Alex Aguilar (aaguilar at ub.edu) and Asunción Borrell (xonborrell at ub.edu). 
 
 ## License 
 
